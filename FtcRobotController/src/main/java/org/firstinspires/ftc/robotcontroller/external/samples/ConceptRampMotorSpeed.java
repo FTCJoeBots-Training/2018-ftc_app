@@ -56,9 +56,9 @@ public class ConceptRampMotorSpeed extends LinearOpMode {
     static final double MAX_REV     = -1.0;     // Maximum REV power applied to motor
 
     // Define class members
-    DcMotor motor;
+    DcMotor motor1;
     double  power   = 0;
-    boolean rampUp  = true;
+
 
 
     @Override
@@ -66,7 +66,7 @@ public class ConceptRampMotorSpeed extends LinearOpMode {
 
         // Connect to motor (Assume standard left wheel)
         // Change the text in quotes to match any motor name on your robot.
-        motor = hardwareMap.get(DcMotor.class, "left_drive");
+        motor1 = hardwareMap.get(DcMotor.class, "motor1");
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to run Motors." );
@@ -76,37 +76,22 @@ public class ConceptRampMotorSpeed extends LinearOpMode {
         // Ramp motor speeds till stop pressed.
         while(opModeIsActive()) {
 
-            // Ramp the motors, according to the rampUp variable.
-            if (rampUp) {
-                // Keep stepping up until we hit the max value.
-                power += INCREMENT ;
-                if (power >= MAX_FWD ) {
-                    power = MAX_FWD;
-                    rampUp = !rampUp;   // Switch ramp direction
-                }
-            }
-            else {
-                // Keep stepping down until we hit the min value.
-                power -= INCREMENT ;
-                if (power <= MAX_REV ) {
-                    power = MAX_REV;
-                    rampUp = !rampUp;  // Switch ramp direction
-                }
-            }
+           // Map "power" variable to gamepad input
+            power = gamepad1. left_stick_y;
+            motor1.setPower(power);
 
             // Display the current value
             telemetry.addData("Motor Power", "%5.2f", power);
             telemetry.addData(">", "Press Stop to end test." );
             telemetry.update();
 
-            // Set the motor to the new power and pause;
-            motor.setPower(power);
-            sleep(CYCLE_MS);
+
+
             idle();
         }
 
         // Turn off motor and signal done;
-        motor.setPower(0);
+        motor1.setPower(0);
         telemetry.addData(">", "Done");
         telemetry.update();
 

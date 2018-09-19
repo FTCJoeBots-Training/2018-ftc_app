@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/gfisbeck/StudioProjects/2018-ftc_app/TeamCode/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v14/values-v14.xml",
+            "outputFile": "/Users/10036/StudioProjects/2018-ftc_app/TeamCode/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v14/values-v14.xml",
             "map": [
                 {
-                    "source": "/Users/gfisbeck/.gradle/caches/transforms-1/files-1.1/RobotCore-release.aar/4f44f8d42710a5b35f59cd084f004763/res/values-v14/values-v14.xml",
+                    "source": "/Users/10036/.gradle/caches/transforms-1/files-1.1/RobotCore-release.aar/a629a33f63f51d5e74592cb8281cd7f3/res/values-v14/values-v14.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
