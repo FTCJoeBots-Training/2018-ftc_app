@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/fisbegc/Documents/OneDrive/Personal/FTC/FTCJoeBots-Training/2018-ftc_app/FtcRobotController/src/main/jniLibs"/></dataSet><dataSet config="debug"><source path="/Users/fisbegc/Documents/OneDrive/Personal/FTC/FTCJoeBots-Training/2018-ftc_app/FtcRobotController/src/debug/jniLibs"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/10039/StudioProjects/2018-ftc_app/FtcRobotController/src/main/jniLibs"/></dataSet><dataSet config="debug"><source path="/Users/10039/StudioProjects/2018-ftc_app/FtcRobotController/src/debug/jniLibs"/></dataSet></merger>
