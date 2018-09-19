@@ -31,7 +31,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  * motor4 (right rear)
  * liftmotor (on the Modern Robotics controller) - lift glyph mechanism up/down
  * clampservo - open/close clamp
- * clamprotate - rotate clamp mechanism up/down
+ * clamprotate - rotate clamp mechanism up/downConceptRampMotorSpeed
  * jewelservo - rotate jewel arm up/down
  * imu - navigation features
  * jewelsensor - detect jewel colors
