@@ -62,7 +62,7 @@ public class BasicOpMode_Iterative extends OpMode
     /*
      * Code to run ONCE when the driver hits INIT
      */
-    @Override
+    //@Override
     public void init() {
         telemetry.addData("Status", "Initialized");
 

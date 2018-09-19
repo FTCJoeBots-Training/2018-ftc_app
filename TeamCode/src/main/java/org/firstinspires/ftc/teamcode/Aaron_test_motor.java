@@ -27,9 +27,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -48,12 +47,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  */
 @TeleOp(name = "Concept: Ramp Motor Speed", group = "Concept")
 //@Disabled
-public class ConceptRampMotorSpeed extends LinearOpMode {
+public class Aaron_test_motor extends LinearOpMode {
 
 
     // Define class members
     DcMotor motor1;
-    double  power   = 0;
+    double  power1   = 0;
+    DcMotor motor2;
+    double power2   =0;
 
 
     //@Override
@@ -61,7 +62,8 @@ public class ConceptRampMotorSpeed extends LinearOpMode {
 
         // Connect to motor (Assume standard left wheel)
         // Change the text in quotes to match any motor name on your robot.
-        motor1 = hardwareMap.get(DcMotor.class, "left_drive");
+        motor1 = hardwareMap.get(DcMotor.class, "motor1");
+        motor2 = hardwareMap.get(DcMotor.class, "motor2");
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to run Motors." );
@@ -71,13 +73,20 @@ public class ConceptRampMotorSpeed extends LinearOpMode {
         // Ramp motor speeds till stop pressed.
         while(opModeIsActive()) {
 
-           power = gamepad1.left_stick_y;
-            motor1.setPower(power);
+            power1 = gamepad1.left_stick_y;
+            motor1.setPower(power1);
+            power2 = gamepad1.right_stick_y;
+            motor2.setPower(power2);
             // Display the current value
-            telemetry.addData("Motor Power", "%5.2f", power);
+            telemetry.addData("Hello World", "I am Aaron");
+            telemetry.addData("Motor Power", "%5.2f", power1);
             telemetry.addData(">", "Press Stop to end test." );
             telemetry.update();
 
+            // Display the current value
+            telemetry.addData("Motor Power", "%5.2f", power2);
+            telemetry.addData(">", "Press Stop to end test." );
+            telemetry.update();
             // Set the motor to the new power and pause;
 
             idle();
@@ -85,6 +94,7 @@ public class ConceptRampMotorSpeed extends LinearOpMode {
 
         // Turn off motor and signal done;
         motor1.setPower(0);
+        motor2.setPower (0);
         telemetry.addData(">", "Done");
         telemetry.update();
 

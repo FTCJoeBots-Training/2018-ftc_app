@@ -40,21 +40,20 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  *
  */
 
-public class HardwareJoeBot
-{
+public class HardwareJoeBot {
     /* Public OpMode members. */
 
     // Declare Motors
-    public DcMotor  motor1 = null; // Left Front
-    public DcMotor  motor2 = null; // Right Front
-    public DcMotor  motor3 = null; // Left Rear
-    public DcMotor  motor4 = null; // Right Rear
-    public DcMotor  liftMotor = null;
-
+    public DcMotor motor1 = null; // Left Front
+    public DcMotor motor2 = null; // Right Front
+    public DcMotor motor3 = null; // Left Rear
+    public DcMotor motor4 = null; // Right Rear
+    public DcMotor liftMotor = null;
+    public double hah = 4.5;
     // Declare Servos
-    public Servo    clampServo = null;  // open/close clamp
-    public Servo    clampRotate = null; // rotate clamp up/down
-    public Servo    jewelServo = null;  // rotate jewel arm up/down
+    public Servo clampServo = null;  // open/close clamp
+    public Servo clampRotate = null; // rotate clamp up/down
+    public Servo jewelServo = null;  // rotate jewel arm up/down
 
 
     // Declare Sensors
@@ -96,14 +95,14 @@ public class HardwareJoeBot
 
 
     /* local OpMode members. */
-    HardwareMap hwMap           =  null;
-    private ElapsedTime period  = new ElapsedTime();
+    HardwareMap hwMap = null;
+    private ElapsedTime period = new ElapsedTime();
 
     // Private Members
     private LinearOpMode myOpMode;
 
     /* Constructor */
-    public HardwareJoeBot(){
+    public HardwareJoeBot() {
 
     }
 
@@ -158,11 +157,11 @@ public class HardwareJoeBot
         // algorithm here just reports accelerations to the logcat log; it doesn't actually
         // provide positional information.
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        parameters.loggingEnabled      = true;
-        parameters.loggingTag          = "IMU";
+        parameters.loggingEnabled = true;
+        parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
         // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
@@ -181,7 +180,6 @@ public class HardwareJoeBot
         this.raiseJewelArm();
 
 
-
     }
 
     /***
@@ -195,7 +193,7 @@ public class HardwareJoeBot
      */
     public void waitForTick(long periodMs) throws InterruptedException {
 
-        long  remaining = periodMs - (long)period.milliseconds();
+        long remaining = periodMs - (long) period.milliseconds();
 
         // sleep for the remaining portion of the regular cycle period.
         if (remaining > 0)
@@ -207,9 +205,7 @@ public class HardwareJoeBot
 
 
     /**
-     *
      * openClamp sets the servos to the open Position and requires no parameters
-     *
      */
 
     public void openClamp() {
@@ -221,9 +217,7 @@ public class HardwareJoeBot
     }
 
     /**
-     *
      * openClamp sets the servos to the open Position and requires no parameters
-     *
      */
 
     public void closeClamp() {
@@ -234,17 +228,14 @@ public class HardwareJoeBot
     }
 
 
-
-    public void  closeClampMid() {
+    public void closeClampMid() {
         //set clamp to "mid" Pos
         clampServo.setPosition(CLAMP_MID_POS);
         bClampOpen = false;
     }
 
     /**
-     *
      * raiseJewelArm rotates jewelServo to Up Position
-     *
      */
     public void raiseJewelArm() {
 
@@ -254,9 +245,7 @@ public class HardwareJoeBot
     }
 
     /**
-     *
      * lowerJewelArm rotates jewelServo to Up Position
-     *
      */
     public void lowerJewelArm() {
 
@@ -266,9 +255,7 @@ public class HardwareJoeBot
     }
 
     /**
-     *
      * raiseClamp rotates clampRotate Servo to Up Position
-     *
      */
     public void raiseClamp() {
 
@@ -278,9 +265,7 @@ public class HardwareJoeBot
     }
 
     /**
-     *
      * raiseClamp rotates clampRotate Servo to Up Position
-     *
      */
     public void lowerClamp() {
 
@@ -294,18 +279,16 @@ public class HardwareJoeBot
      * void setMode(DcMotor.RunMode mode ) Set all drive motors to same mode.
      * @param mode    Desired Motor mode.
      */
-    public void setMode(DcMotor.RunMode mode ) {
+    public void setMode(DcMotor.RunMode mode) {
         motor1.setMode(mode);
         motor2.setMode(mode);
         motor3.setMode(mode);
         motor4.setMode(mode);
+
+
     }
 
-
-
 }
-
-
 
 
 
