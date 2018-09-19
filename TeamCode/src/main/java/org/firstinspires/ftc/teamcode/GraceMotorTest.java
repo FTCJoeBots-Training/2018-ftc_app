@@ -35,7 +35,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 /**
- * Sample code to test mapping of one motor to the gamepad.
+ * Sample code to test mapping of one motor to the gamepad
  */
 @TeleOp(name = "Concept: Ramp Motor Speed", group = "Concept")
 //@Disabled
