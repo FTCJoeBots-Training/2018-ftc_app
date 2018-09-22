@@ -64,17 +64,19 @@ public class MariahMotorMaping extends LinearOpMode {
     static final double MAX_REV = -1.0;     // Maximum REV power applied to motor
 
     // Define class members
-    DcMotor motor;
-    double power = 0;
-
+    DcMotor leftmotor;
+    double leftpower = 0;
+    DcMotor rightmotor;
+    double rightpower = 0;
+    
 
     @Override
     public void runOpMode() {
 
         // Connect to motor (Assume standard left wheel)
         // Change the text in quotes to match any motor name on your robot.
-        motor = hardwareMap.get(DcMotor.class, "motor1");
-
+        leftmotor = hardwareMap.get(DcMotor.class, "motor1");
+        rightmotor = hardwareMap.get(DcMotor.class, "motor2");
         // Wait for the start button
         telemetry.addData(">", "Press Start to run Motors.");
         telemetry.update();
@@ -84,21 +86,23 @@ public class MariahMotorMaping extends LinearOpMode {
         while (opModeIsActive()) {
 
             // Read data from gamepad
-            power = gamepad1.left_stick_y;
-            power=gamepad2.right_stick_y;
+            leftpower = gamepad1.left_stick_y;
+            rightpower=-gamepad1.right_stick_y;
             // Display the current value
-            telemetry.addData("Motor Power", "%5.2f", power);
+            telemetry.addData("leftMotor Power", "%5.2f", leftpower);
             telemetry.addData(">", "Press Stop to end test.");
             telemetry.update();
 
             // Set the motor to the new power and pause;
-            motor.setPower(power);
+            leftmotor.setPower(leftpower);
+            rightmotor.setPower(rightpower);
             sleep(CYCLE_MS);
             idle();
         }
 
         // Turn off motor and signal done;
-        motor.setPower(0);
+        leftmotor.setPower(0);
+        rightmotor.setPower(0);
         telemetry.addData(">", "Done");
         telemetry.update();
 
