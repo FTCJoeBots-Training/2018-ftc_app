@@ -66,7 +66,7 @@ public class GraceMotorTest extends LinearOpMode {
         power = gamepad1.left_stick_y;
         motor1.setPower(power);
 
-
+ 
 
             // Display the current value
             telemetry.addData("Motor Power", "%5.2f", power);
