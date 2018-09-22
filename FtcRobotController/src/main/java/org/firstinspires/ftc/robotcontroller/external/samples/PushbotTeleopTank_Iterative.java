@@ -128,7 +128,7 @@ public class PushbotTeleopTank_Iterative extends OpMode{
         // Send telemetry message to signify robot running;
        /* telemetry.addData("claw",  "Offset = %.2f", clawOffset);
         telemetry.addData("left",  "%.2f", left);
-        telemetry.addData("right", "%.2f", right);
+        telemetry.addData("right", "%.2f", right); */
     }
 
     /*
