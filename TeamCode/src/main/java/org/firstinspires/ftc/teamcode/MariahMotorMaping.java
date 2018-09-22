@@ -54,7 +54,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name = "Mariahj Ramp Motor Speed", group = "Concept")
+@TeleOp(name = "Mariah Ramp Motor Speed", group = "Concept")
 //@Disabled
 public class MariahMotorMaping extends LinearOpMode {
 
@@ -65,10 +65,12 @@ public class MariahMotorMaping extends LinearOpMode {
 
     // Define class members
     DcMotor leftmotor;
+    DcMotor leftmotor2;
     double leftpower = 0;
     DcMotor rightmotor;
+    DcMotor rightmotor2;
     double rightpower = 0;
-    
+
 
     @Override
     public void runOpMode() {
@@ -76,7 +78,11 @@ public class MariahMotorMaping extends LinearOpMode {
         // Connect to motor (Assume standard left wheel)
         // Change the text in quotes to match any motor name on your robot.
         leftmotor = hardwareMap.get(DcMotor.class, "motor1");
+        leftmotor2 = hardwareMap. get(DcMotor.class, "motor3");
         rightmotor = hardwareMap.get(DcMotor.class, "motor2");
+        rightmotor2 = hardwareMap. get(DcMotor.class, "motor4");
+
+
         // Wait for the start button
         telemetry.addData(">", "Press Start to run Motors.");
         telemetry.update();
@@ -95,14 +101,18 @@ public class MariahMotorMaping extends LinearOpMode {
 
             // Set the motor to the new power and pause;
             leftmotor.setPower(leftpower);
+            leftmotor2.setPower(leftpower);
             rightmotor.setPower(rightpower);
+            rightmotor2.setPower(rightpower);
             sleep(CYCLE_MS);
             idle();
         }
 
         // Turn off motor and signal done;
         leftmotor.setPower(0);
+        leftmotor2.setPower(0);
         rightmotor.setPower(0);
+        rightmotor2.setPower(0);
         telemetry.addData(">", "Done");
         telemetry.update();
 
