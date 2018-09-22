@@ -1,4 +1,13 @@
-#Sat Sep 15 14:29:20 EDT 2018
-base.0=/Users/fisbegc/Documents/OneDrive/Personal/FTC/FTCJoeBots-Training/2018-ftc_app/TeamCode/build/intermediates/transforms/dexMerger/debug/0
+#Sat Sep 22 09:58:20 EDT 2018
+path.3=classes.dex
+path.2=classes.dex
+path.1=classes.dex
 path.0=classes.dex
+renamed.3=classes4.dex
+renamed.2=classes3.dex
+renamed.1=classes2.dex
 renamed.0=classes.dex
+base.3=/Users/13610/StudioProjects/2018-ftc_app/TeamCode/build/intermediates/transforms/dexMerger/debug/14
+base.2=/Users/13610/StudioProjects/2018-ftc_app/TeamCode/build/intermediates/transforms/dexMerger/debug/12
+base.1=/Users/13610/StudioProjects/2018-ftc_app/TeamCode/build/intermediates/transforms/dexMerger/debug/15
+base.0=/Users/13610/StudioProjects/2018-ftc_app/TeamCode/build/intermediates/transforms/dexMerger/debug/13
