@@ -54,7 +54,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name = "Concept: Ramp Motor Speed", group = "Concept")
+@TeleOp(name = "Mariahj Ramp Motor Speed", group = "Concept")
 //@Disabled
 public class MariahMotorMaping extends LinearOpMode {
 
@@ -73,7 +73,7 @@ public class MariahMotorMaping extends LinearOpMode {
 
         // Connect to motor (Assume standard left wheel)
         // Change the text in quotes to match any motor name on your robot.
-        motor = hardwareMap.get(DcMotor.class, "left_drive");
+        motor = hardwareMap.get(DcMotor.class, "motor1");
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to run Motors.");
@@ -85,6 +85,7 @@ public class MariahMotorMaping extends LinearOpMode {
 
             // Read data from gamepad
             power = gamepad1.left_stick_y;
+            power=gamepad2.right_stick_y;
             // Display the current value
             telemetry.addData("Motor Power", "%5.2f", power);
             telemetry.addData(">", "Press Stop to end test.");
