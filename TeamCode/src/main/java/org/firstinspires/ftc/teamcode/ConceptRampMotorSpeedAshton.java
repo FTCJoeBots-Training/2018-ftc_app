@@ -55,6 +55,7 @@ public class ConceptRampMotorSpeedAshton extends LinearOpMode {
     // Define class members
     DcMotor motor1;
     double  power   = 0;
+    DcMotor motor2;
 
 
 
@@ -64,6 +65,7 @@ public class ConceptRampMotorSpeedAshton extends LinearOpMode {
         // Connect to motor (Assume standard left wheel)
         // Change the text in quotes to match any motor name on your robot.
         motor1 = hardwareMap.get(DcMotor.class, "motor1");
+        motor2 = hardwareMap.get(DcMotor.class, "motor2");
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to run Motors." );
@@ -83,10 +85,22 @@ public class ConceptRampMotorSpeedAshton extends LinearOpMode {
             // Set the motor to the new power and pause;
             motor1.setPower(power);
 
+            power = gamepad1.right_stick_y;
+            motor2.setPower(power);
+            // Display the current value
+            telemetry.addData("Motor Power", "%5.2f", power);
+            telemetry.addData(">", "Press Stop to end test." );
+            telemetry.update();
+
+            // Set the motor to the new power and pause;
+            motor2.setPower(power);
+
+
             idle();
         }
 
         // Turn off motor and signal done;
+        motor2.setPower(0);
         motor1.setPower(0);
         telemetry.addData(">", "Done");
         telemetry.update();
