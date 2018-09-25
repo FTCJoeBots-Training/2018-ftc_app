@@ -1,4 +1,13 @@
-#Sat Sep 22 11:42:30 EDT 2018
-base.0=/Users/11564/AndroidStudioProjects/2018-ftc_app/TeamCode/build/intermediates/transforms/dexMerger/debug/68
+#Tue Sep 25 19:32:02 EDT 2018
+path.3=classes.dex
+path.2=classes.dex
+path.1=classes.dex
 path.0=classes.dex
+renamed.3=classes4.dex
+renamed.2=classes3.dex
+renamed.1=classes2.dex
 renamed.0=classes.dex
+base.3=/Users/11564/AndroidStudioProjects/2018-ftc_app/TeamCode/build/intermediates/transforms/dexMerger/debug/83
+base.2=/Users/11564/AndroidStudioProjects/2018-ftc_app/TeamCode/build/intermediates/transforms/dexMerger/debug/80
+base.1=/Users/11564/AndroidStudioProjects/2018-ftc_app/TeamCode/build/intermediates/transforms/dexMerger/debug/82
+base.0=/Users/11564/AndroidStudioProjects/2018-ftc_app/TeamCode/build/intermediates/transforms/dexMerger/debug/81
