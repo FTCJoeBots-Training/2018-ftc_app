@@ -37,7 +37,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Sample code to test mapping of one motor to the gamepad.
  */
-@TeleOp(name = "Concept: Ramp Motor Speed", group = "Concept")
+@TeleOp(name = "Grace Motor Test", group = "Concept")
 //@Disabled
 public class GraceMotorTest extends LinearOpMode {
 
@@ -45,6 +45,16 @@ public class GraceMotorTest extends LinearOpMode {
     // Define class members
     DcMotor motor1;
     double  power   = 0;
+
+    DcMotor motor2;
+    double power2   = 0;
+
+    DcMotor motor3;
+    double power3   = 0;
+
+    DcMotor motor4;
+    double power4   = 0;
+
 
 
 
@@ -54,6 +64,9 @@ public class GraceMotorTest extends LinearOpMode {
         // Connect to motor (Assume standard left wheel)
         // Change the text in quotes to match any motor name on your robot.
         motor1 = hardwareMap.get(DcMotor.class, "motor1");
+        motor2 = hardwareMap.get(DcMotor.class, "motor2");
+        motor3 = hardwareMap.get(DcMotor.class, "motor3");
+        motor4 = hardwareMap.get(DcMotor.class, "motor4");
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to run Motors." );
@@ -64,12 +77,21 @@ public class GraceMotorTest extends LinearOpMode {
 
         // Map "power" variable to gamepad input
         power = gamepad1.left_stick_y;
+        power2 = gamepad1.right_stick_y;
+        power3 = gamepad1.left_stick_y;
+        power4 = gamepad1.right_stick_y;
         motor1.setPower(power);
+        motor2.setPower(-power2);
+        motor3.setPower(power3);
+        motor4.setPower(-power4);
 
- 
+
 
             // Display the current value
             telemetry.addData("Motor Power", "%5.2f", power);
+            telemetry.addData("Motor Power", "%5.2f", power2);
+            telemetry.addData("Motor Power", "%5.2f", power3);
+            telemetry.addData("Motor Power", "%5.2f", power4);
             telemetry.addData(">", "Press Stop to end test." );
             telemetry.update();
 
@@ -78,6 +100,9 @@ public class GraceMotorTest extends LinearOpMode {
 
         // Turn off motor and signal done;
         motor1.setPower(0);
+        motor2.setPower(0);
+        motor3.setPower(0);
+        motor4.setPower(0);
         telemetry.addData(">", "Done");
         telemetry.update();
 
