@@ -59,7 +59,11 @@ public class Aaron_test_motor extends LinearOpMode {
     double power3 =0;
     DcMotor motor4;
     double power4 =0;
-
+    double forward;
+    double clockwise;
+    double right;
+    double k;
+    double max;
     //@Override
     public void runOpMode() {
 
@@ -79,16 +83,16 @@ public class Aaron_test_motor extends LinearOpMode {
 
             power1 = gamepad1.left_stick_y;
 
-            power2 = gamepad1.left_stick_y;
+            power3 = gamepad1.left_stick_y;
 
-            power3 = -gamepad1.right_stick_y;
+            power2 = -gamepad1.right_stick_y;
 
             power4 = -gamepad1.right_stick_y;
 
             motor4.setPower(power4);
             motor1.setPower(power1);
-            motor2.setPower(power3);
-            motor3.setPower(power2);
+            motor2.setPower(power2);
+            motor3.setPower(power3);
             // Display the current value
             telemetry.addData("Hello World", "I am Aaron");
             telemetry.addData("Motor Power", "%5.2f", power1);
@@ -108,6 +112,10 @@ public class Aaron_test_motor extends LinearOpMode {
             telemetry.addData(">", "Press Stop to end test." );
             telemetry.update();
             // Set the motor to the new power and pause;
+            power1 = forward + clockwise + right;
+            power2 = forward - clockwise - right;
+            power3 = forward + clockwise - right;
+            power4 = forward - clockwise + right;
 
             idle();
         }

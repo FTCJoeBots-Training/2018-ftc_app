@@ -25,14 +25,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Fine tune the movements and LOWER the TIME OF MOVEMENT in autonomous.
  * List of issues at Comp(1)-> https://docs.google.com/a/stjoebears.com/spreadsheets/d/1r_liipKBU7GHfONdxq9E6d4f7zikcCuXwDL2bsQfwm0/edit?usp=sharing
  *G-Sheet of time VS Heading for autonomous -> https://docs.google.com/a/stjoebears.com/spreadsheets/d/1pqv0iN94fFd5KvX1YIWP7z39HgpURXsscn0zPujs1q4/edit?usp=sharing
-*/
+ */
 @TeleOp(name="Twins TeleOp", group="TeleOp")
 
 public class teleOp2017JoeBot extends LinearOpMode {
 
     HardwareJoeBot robot = new HardwareJoeBot();
 
-    @Override
+   // @Override
     public void runOpMode() throws InterruptedException {
 
         robot.init(hardwareMap, this);
@@ -90,8 +90,7 @@ public class teleOp2017JoeBot extends LinearOpMode {
 
             // Add a tuning constant "K" to tune rotate axis sensitivity
             k = .6;
-            clockwise = clockwise * k; //Make sure the "= Clockwise" is "= -clockwise"
-
+            clockwise = clockwise * k; //Make sure the "= Clockwise" is "= -clockwise
 
             // Calculate motor power
             power1 = forward + clockwise + right;
@@ -289,7 +288,7 @@ public class teleOp2017JoeBot extends LinearOpMode {
 
             // Left Bumper Press moves lift to "base" position
 
-           bCurrStateLB = gamepad2.left_bumper;
+            bCurrStateLB = gamepad2.left_bumper;
 
             if ((bCurrStateLB == true) && (bCurrStateLB != bPrevStateLB)) {
 
