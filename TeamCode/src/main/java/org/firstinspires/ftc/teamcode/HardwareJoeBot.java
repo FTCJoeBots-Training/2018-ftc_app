@@ -18,7 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-/**
+/*
  * This is NOT an opmode. This is a hardware class used to abstract the hardware config for the
  * 2017 FTC Relic Recovery challenge. This file has been generalized to work for both JoeBots
  * teams FTC 11855 and 13702.
@@ -37,8 +37,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  * jewelsensor - detect jewel colors
  *
  * Note:  All names are lower case and some have single spaces between words.
- *
  */
+
 
 public class HardwareJoeBot
 {
@@ -49,17 +49,17 @@ public class HardwareJoeBot
     public DcMotor  motor2 = null; // Right Front
     public DcMotor  motor3 = null; // Left Rear
     public DcMotor  motor4 = null; // Right Rear
-    public DcMotor  liftMotor = null;
+    //public DcMotor  liftMotor = null;
 
     // Declare Servos
-    public Servo    clampServo = null;  // open/close clamp
-    public Servo    clampRotate = null; // rotate clamp up/down
-    public Servo    jewelServo = null;  // rotate jewel arm up/down
+    //public Servo    clampServo = null;  // open/close clamp
+    //public Servo    clampRotate = null; // rotate clamp up/down
+    //public Servo    jewelServo = null;  // rotate jewel arm up/down
 
 
     // Declare Sensors
-    public BNO055IMU imu;                  // The IMU sensor object
-    public ColorSensor jewelSensor = null; // Rev Robotics Color Sensor
+    //public BNO055IMU imu;                  // The IMU sensor object
+    //public ColorSensor jewelSensor = null; // Rev Robotics Color Sensor
 
 
     // Declare static values
@@ -84,11 +84,11 @@ public class HardwareJoeBot
 
 
     // Variables used for tracking mechanism state
-    public boolean bClampOpen = false;
-    public boolean bClampDown = false; //Is the clamp Rotated Down?
-    public boolean bLiftRaised = false;
-    public boolean bJewelArmUp = false;
-    public boolean xClampOpen = false;
+    //public boolean bClampOpen = false;
+    //public boolean bClampDown = false; //Is the clamp Rotated Down?
+    //public boolean bLiftRaised = false;
+    //public boolean bJewelArmUp = false;
+    //public boolean xClampOpen = false;
 
     // Variables used for IMU tracking...
     public Orientation angles;
@@ -119,22 +119,22 @@ public class HardwareJoeBot
         motor2 = hwMap.dcMotor.get("motor2");
         motor3 = hwMap.dcMotor.get("motor3");
         motor4 = hwMap.dcMotor.get("motor4");
-        liftMotor = hwMap.dcMotor.get("liftmotor");
+        //liftMotor = hwMap.dcMotor.get("liftmotor");
 
-        jewelSensor = hwMap.get(ColorSensor.class, "jewelsensor");
+        //jewelSensor = hwMap.get(ColorSensor.class, "jewelsensor");
         // Set Default Motor Directions
         motor1.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motor2.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
         motor3.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motor4.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
-        liftMotor.setDirection(DcMotor.Direction.FORWARD);
+        //liftMotor.setDirection(DcMotor.Direction.FORWARD);
 
         // Set all motors to zero power
         motor1.setPower(0);
         motor2.setPower(0);
         motor3.setPower(0);
         motor4.setPower(0);
-        liftMotor.setPower(0);
+        //liftMotor.setPower(0);
 
         // Set all drive motors to run without encoders.
         // May want to switch to  RUN_USING_ENCODERS during autonomous
@@ -144,13 +144,13 @@ public class HardwareJoeBot
         motor4.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Set lift motor to run using encoder...
-        liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Initialize the servos
-        clampServo = hwMap.servo.get("clampservo");
-        clampRotate = hwMap.servo.get("clamprotate");
-        jewelServo = hwMap.servo.get("jewelservo");
+        //clampServo = hwMap.servo.get("clampservo");
+        //clampRotate = hwMap.servo.get("clamprotate");
+        //jewelServo = hwMap.servo.get("jewelservo");
 
 
         // IMU Initializaiton
@@ -168,17 +168,17 @@ public class HardwareJoeBot
         // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
         // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
         // and named "imu".
-        imu = hwMap.get(BNO055IMU.class, "imu");
-        imu.initialize(parameters);
+        //imu = hwMap.get(BNO055IMU.class, "imu");
+        //imu.initialize(parameters);
 
         // Initialize the Jewel Sensor
-        jewelSensor = hwMap.get(ColorSensor.class, "jewelsensor");
+        //jewelSensor = hwMap.get(ColorSensor.class, "jewelsensor");
 
 
         //Set servos to start position
-        this.raiseClamp();
-        this.closeClamp();
-        this.raiseJewelArm();
+        //this.raiseClamp();
+        //this.closeClamp();
+        //this.raiseJewelArm();
 
 
 
@@ -215,8 +215,8 @@ public class HardwareJoeBot
     public void openClamp() {
 
         // Set both clamps to open position;
-        clampServo.setPosition(CLAMP_OPEN_POS);
-        bClampOpen = true;
+        //clampServo.setPosition(CLAMP_OPEN_POS);
+        //bClampOpen = true;
 
     }
 
@@ -226,68 +226,69 @@ public class HardwareJoeBot
      *
      */
 
-    public void closeClamp() {
+    //public void closeClamp() {
 
         // Set both clamps to open position;
-        clampServo.setPosition(CLAMP_CLOSE_POS);
-        bClampOpen = false;
-    }
+        //clampServo.setPosition(CLAMP_CLOSE_POS);
+        //bClampOpen = false;
+    //}
 
 
 
-    public void  closeClampMid() {
+    //public void  closeClampMid() {
         //set clamp to "mid" Pos
-        clampServo.setPosition(CLAMP_MID_POS);
-        bClampOpen = false;
-    }
+        //clampServo.setPosition(CLAMP_MID_POS);
+        //bClampOpen = false;
+    //}
 
     /**
      *
      * raiseJewelArm rotates jewelServo to Up Position
      *
      */
-    public void raiseJewelArm() {
 
-        jewelServo.setPosition(JEWEL_ARM_UP_POS);
-        bJewelArmUp = true;
+    //public void raiseJewelArm() {
 
-    }
+        //jewelServo.setPosition(JEWEL_ARM_UP_POS);
+        //bJewelArmUp = true;
+
+    //}
 
     /**
      *
      * lowerJewelArm rotates jewelServo to Up Position
      *
      */
-    public void lowerJewelArm() {
+    //public void lowerJewelArm() {
 
-        jewelServo.setPosition(JEWEL_ARM_DOWN_POS);
-        bJewelArmUp = false;
+        //jewelServo.setPosition(JEWEL_ARM_DOWN_POS);
+        //bJewelArmUp = false;
 
-    }
-
-    /**
-     *
-     * raiseClamp rotates clampRotate Servo to Up Position
-     *
-     */
-    public void raiseClamp() {
-
-        clampRotate.setPosition(CLAMP_UP_POS);
-        bClampDown = false;
-
-    }
+    //}
 
     /**
      *
      * raiseClamp rotates clampRotate Servo to Up Position
      *
      */
-    public void lowerClamp() {
+    //public void raiseClamp() {
 
-        clampRotate.setPosition(CLAMP_DOWN_POS);
-        bClampDown = true;
+        //clampRotate.setPosition(CLAMP_UP_POS);
+        //bClampDown = false;
 
-    }
+    //}
+
+    /**
+     *
+     * raiseClamp rotates clampRotate Servo to Up Position
+     *
+     */
+    //public void lowerClamp() {
+
+        //clampRotate.setPosition(CLAMP_DOWN_POS);
+        //bClampDown = true;
+
+    //}
 
 
     /***
