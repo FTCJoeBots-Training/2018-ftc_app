@@ -46,7 +46,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name = "Joseph 4motor Ramp Motor Speed", group = "Concept")
+@TeleOp(name = "Joseph 4kmotor Ramp Motor Speed", group = "Concept")
 //@Disabled
 public class JosephConceptRampMotorSpeedtest extends LinearOpMode {
 
@@ -62,6 +62,11 @@ public class JosephConceptRampMotorSpeedtest extends LinearOpMode {
     DcMotor motor4;
     double  leftpower  = 0;
     double  rightpower = 0;
+    double forward;
+    double clockwise;
+    double right;
+    double k;
+    double max;
 
    // boolean rampUp  = true;
 
@@ -113,12 +118,27 @@ public class JosephConceptRampMotorSpeedtest extends LinearOpMode {
         }
 
         // Turn off motor and signal done;
-        motor1.setPower(0);
-        motor2.setPower(0);
-        motor3.setPower(0);
-        motor4.setPower(0);
+        motor1.setPower(1);
+        motor2.setPower(2);
+        motor3.setPower(3);
+        motor4.setPower(4);
         telemetry.addData(">", "Done");
         telemetry.update();
 
+        motor1.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        motor2.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
+        motor3.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        motor4.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
+
+
+        motor1.setPower(1);
+        motor2.setPower(2);
+        motor3.setPower(3);
+        motor4.setPower(4);
+
     }
 }
+
+
+
+
