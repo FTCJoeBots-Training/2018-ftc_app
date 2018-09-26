@@ -77,6 +77,7 @@ public class MariahMotorMaping extends LinearOpMode {
 
         // Connect to motor (Assume standard left wheel)
         // Change the text in quotes to match any motor name on your robot.
+        //All Moter move in teleop
         leftmotor = hardwareMap.get(DcMotor.class, "motor1");
         leftmotor2 = hardwareMap. get(DcMotor.class, "motor3");
         rightmotor = hardwareMap.get(DcMotor.class, "motor2");
