@@ -26,7 +26,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * List of issues at Comp(1)-> https://docs.google.com/a/stjoebears.com/spreadsheets/d/1r_liipKBU7GHfONdxq9E6d4f7zikcCuXwDL2bsQfwm0/edit?usp=sharing
  *G-Sheet of time VS Heading for autonomous -> https://docs.google.com/a/stjoebears.com/spreadsheets/d/1pqv0iN94fFd5KvX1YIWP7z39HgpURXsscn0zPujs1q4/edit?usp=sharing
 */
-@TeleOp(name="Twins TeleOp", group="TeleOp")
+@TeleOp(name="Sanjan's_test", group="TeleOp")
 
 public class SanjanAmeresh extends LinearOpMode {
 
@@ -81,7 +81,7 @@ public class SanjanAmeresh extends LinearOpMode {
             //Drive Via "Analog Sticks" (Not Toggle)
             //Set initial motion parameters to Gamepad1 Inputs
             forward = -gamepad1.left_stick_y;
-            //right = gamepad1.left_stick_x;
+            //right = gamepad1.right_stick_x;
             right = -gamepad1.left_trigger + gamepad1.right_trigger;
             clockwise = gamepad1.right_stick_x;
 
@@ -116,9 +116,9 @@ public class SanjanAmeresh extends LinearOpMode {
             }
 
             motor1.setPower(power1);
-            motor2.setPower(power2);
+            motor2.setPower(-power2);
             motor3.setPower(power3);
-            motor4.setPower(power4);
+            motor4.setPower(-power4);
             //------------------------------------------
             //-------------------------------------------
 
