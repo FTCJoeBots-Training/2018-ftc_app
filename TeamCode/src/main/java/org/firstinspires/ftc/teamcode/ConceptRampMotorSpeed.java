@@ -46,7 +46,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name = "SanjanMotor1: Ramp Motor Speed", group = "Concept")
+@TeleOp(name = "SanjanMotor: Ramp Motor Speed", group = "Concept")
 //@Disabled
 public class ConceptRampMotorSpeed extends LinearOpMode {
 
@@ -54,6 +54,8 @@ public class ConceptRampMotorSpeed extends LinearOpMode {
     // Define class members
     DcMotor motor1;
     DcMotor motor2;
+    DcMotor motor3;
+    DcMotor motor4;
     double  leftpower   = 0;
     double  rightpower  = 0;
 
@@ -65,7 +67,8 @@ public class ConceptRampMotorSpeed extends LinearOpMode {
         // Change the text in quotes to match any motor name on your robot.
         motor1 = hardwareMap.get(DcMotor.class, "motor1");   //motor1:left motor
         motor2 = hardwareMap.get(DcMotor.class, "motor2");   //motor2:left motor
-
+        motor3 = hardwareMap.get(DcMotor.class, "motor3");   //motor3:left motor
+        motor4 = hardwareMap.get(DcMotor.class, "motor4");   //motor4:left motor
         // Wait for the start button
         telemetry.addData(">", "Press Start to run Motors." );
         telemetry.update();
@@ -80,7 +83,8 @@ public class ConceptRampMotorSpeed extends LinearOpMode {
             rightpower = -gamepad1.right_stick_y;
             motor1.setPower(leftpower);
             motor2.setPower(rightpower);
-
+            motor3.setPower(leftpower);
+            motor4.setPower(rightpower);
             // Display the current value
             telemetry.addData("Motor Power", "%5.2f", leftpower);
             telemetry.addData(">", "Press Stop to end test." );
@@ -92,6 +96,8 @@ public class ConceptRampMotorSpeed extends LinearOpMode {
         // Turn off motor and signal done;
         motor1.setPower(0);
         motor2.setPower(0);
+        motor3.setPower(0);
+        motor4.setPower(0);
         telemetry.addData(">", "Done");
         telemetry.update();
 
