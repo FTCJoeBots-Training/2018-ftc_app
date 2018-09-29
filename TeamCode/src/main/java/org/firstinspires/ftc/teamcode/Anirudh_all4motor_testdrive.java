@@ -54,21 +54,16 @@ public class Anirudh_all4motor_testdrive extends LinearOpMode {
     static final int    CYCLE_MS    =   50;     // period of each cycle
     static final double MAX_FWD     =  1.0;     // Maximum FWD power applied to motor
     static final double MAX_REV     = -1.0;     // Maximum REV power applied to motor
-  
+
     // Define class members
     DcMotor motor1;
-
+    double  power1= 0;
     DcMotor motor2;
-
+    double  power2= 0;
     DcMotor motor3;
-
+    double  power3= 0;
     DcMotor motor4;
-
-
-    double  rightpower   = 0;
-    double  leftpower   = 0;
-
-
+    double  power4= 0;
 
     @Override
     public void runOpMode() {
@@ -85,25 +80,53 @@ public class Anirudh_all4motor_testdrive extends LinearOpMode {
         // Wait for the start button
         telemetry.addData(">", "Press Start to run Motors." );
         telemetry.update();
+
+        // Set Default Motor Directions
+        motor1.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        motor2.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
+        motor3.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        motor4.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
+
         waitForStart();
 
         // Ramp motor speeds till stop pressed.
         while(opModeIsActive()) {
 
            // Map "power" variable to gamepad input
-            leftpower = gamepad1.left_stick_y;
-            motor1.setPower(leftpower);
-            motor3.setPower(leftpower);
+            power1 = gamepad1.left_stick_y;
 
-            rightpower = -gamepad1.right_stick_y;
-            motor2.setPower(rightpower);
-            motor4.setPower(rightpower);
+            power2 = gamepad1.left_stick_y;
+
+            power3 = gamepad2.left_stick_x;
+
+            power4 = gamepad2.left_stick_x;
+
+            motor4.setPower(power4);
+            motor1.setPower(power1);
+            motor2.setPower(power2);
+            motor3.setPower(power3);
+
+
+
+
+
 
             // Display the current value
-            telemetry.addData("Motor Power", "%5.2f", leftpower);
+            telemetry.addData("Motor Power", "%5.2f", power1);
             telemetry.addData(">", "Press Stop to end test." );
             telemetry.update();
 
+            telemetry.addData("Motor Power", "%5.2f", power2);
+            telemetry.addData(">", "Press Stop to end test." );
+            telemetry.update();
+
+            telemetry.addData("Motor Power", "%5.2f", power3);
+            telemetry.addData(">", "Press Stop to end test." );
+            telemetry.update();
+
+            telemetry.addData("Motor Power", "%5.2f", power4);
+            telemetry.addData(">", "Press Stop to end test." );
+            telemetry.update();
 
 
             idle();

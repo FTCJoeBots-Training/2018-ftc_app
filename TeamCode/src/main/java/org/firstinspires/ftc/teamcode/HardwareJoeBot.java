@@ -119,7 +119,7 @@ public class HardwareJoeBot
         motor2 = hwMap.dcMotor.get("motor2");
         motor3 = hwMap.dcMotor.get("motor3");
         motor4 = hwMap.dcMotor.get("motor4");
-        liftMotor = hwMap.dcMotor.get("liftmotor");
+
 
         jewelSensor = hwMap.get(ColorSensor.class, "jewelsensor");
         // Set Default Motor Directions
