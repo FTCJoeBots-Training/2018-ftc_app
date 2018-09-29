@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 /**
  * This OpMode ramps a single motor speed up and down repeatedly until Stop is pressed.
@@ -56,8 +57,8 @@ public class ConceptRampMotorSpeedAshton extends LinearOpMode {
     DcMotor motor1;
     double  power   = 0;
     DcMotor motor2;
-
-
+    DcMotor motor3;
+    DcMotor motor4;
 
     //@Override
     public void runOpMode() {
@@ -66,6 +67,13 @@ public class ConceptRampMotorSpeedAshton extends LinearOpMode {
         // Change the text in quotes to match any motor name on your robot.
         motor1 = hardwareMap.get(DcMotor.class, "motor1");
         motor2 = hardwareMap.get(DcMotor.class, "motor2");
+        motor3 = hardwareMap.get(DcMotor.class, "motor3");
+        motor4 = hardwareMap.get(DcMotor.class, "motor4");
+
+        motor1.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
+        motor2.setDirection(DcMotor.Direction.REVERSE); // Set to FORWARD if using AndyMark motors
+        motor3.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
+        motor4.setDirection(DcMotor.Direction.REVERSE); // Set to FORWARD if using AndyMark motors
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to run Motors." );
@@ -95,6 +103,27 @@ public class ConceptRampMotorSpeedAshton extends LinearOpMode {
             // Set the motor to the new power and pause;
             motor2.setPower(power);
 
+
+            power = gamepad1.left_stick_y;
+            motor3.setPower(power);
+            // Display the current value
+            telemetry.addData("Motor Power", "%5.2f", power);
+            telemetry.addData(">", "Press Stop to end test." );
+            telemetry.update();
+
+            // Set the motor to the new power and pause;
+            motor3.setPower(power);
+
+
+            power = gamepad1.right_stick_y;
+            motor4.setPower(power);
+            // Display the current value
+            telemetry.addData("Motor Power", "%5.2f", power);
+            telemetry.addData(">", "Press Stop to end test." );
+            telemetry.update();
+
+            // Set the motor to the new power and pause;
+            motor4.setPower(power);
 
             idle();
         }
