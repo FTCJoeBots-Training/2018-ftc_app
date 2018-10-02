@@ -1,9 +1,0 @@
-CM-10
-
-DESCRIPTION:
-I can push my code to the Robot Controller.
-
-CRITERIA:
-The student understands how ot connect their laptop to the phone and press the "green arrow" button
-to push the code to the phone.
-

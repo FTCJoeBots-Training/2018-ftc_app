@@ -1,8 +1,0 @@
-CM-01
-
-DESCRIPTION:
-I can describe how the JoeBots use Git to manage source code
-
-CRITERIA:
-The Student understands the purpose of GitHub and can explain why it is important and how the
-JoeBots use GitHub to manage source code.

@@ -1,9 +1,0 @@
-CM-09
-
-DESCRIPTION:
-I can build my code in Android Studio to check for compile-time problems.
-
-CRITERIA:
-The student can use the "build" (green hammer) button to check for compile errors before
-connecting to a phone and pushing the code.
-

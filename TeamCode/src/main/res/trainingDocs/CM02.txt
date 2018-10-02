@@ -1,9 +1,0 @@
-CM-02
-
-DESCRIPTION:
-I can create a new branch in Git
-
-CRITERIA:
-The Student knows how to create a new branch based on an existing branch. The Student should
-understand what a branch is and how the source branch affects the newly created branch.
-

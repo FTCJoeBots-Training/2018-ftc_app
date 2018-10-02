@@ -1,8 +1,0 @@
-CM-06
-
-DESCRIPTION:
-I can navigate within Android Studio to find the TeamCode Folder.
-
-CRITERIA:
-The student understand the layout of Android Studio and can find the folder in which our robot
-code is stored.

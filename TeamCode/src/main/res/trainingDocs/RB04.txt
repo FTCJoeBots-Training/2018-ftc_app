@@ -1,8 +1,0 @@
-RB-04
-
-DESCRIPTION:
-I can describe how to use a color sensor in programming
-
-CRITERIA:
-The student can describe how a color sensor works (what data is returns) and how it might be used
-in programming a robot.

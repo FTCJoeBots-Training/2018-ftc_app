@@ -1,8 +1,0 @@
-CM-07
-
-DESCRIPTION:
-I can copy sample programs from the FTCRobotController Folder to the appropriate TeamCode location.
-
-CRITERIA:
-The student can copy a program from the FtcRobotController/external.samples folder and successfully
-paste it in the TeamCode folder, including renaming the file.

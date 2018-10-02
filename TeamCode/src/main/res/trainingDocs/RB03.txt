@@ -1,8 +1,0 @@
-RB-03
-
-DESCRIPTION:
-I can describe how a servo works
-
-CRITERIA:
-The student can describe how a servo works and how a servo is different from a motor. The student
-can describe situations in which a servo might be used.

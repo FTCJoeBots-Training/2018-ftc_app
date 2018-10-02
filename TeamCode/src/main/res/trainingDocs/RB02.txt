@@ -1,9 +1,0 @@
-RB-02
-
-DESCRIPTION:
-I can describe how an encoder works on a motor.
-
-CRITERIA:
-The student can describe how an encoder works with a motor. The student understands when to use an
-encoder (attempting to drive a motor a very specific number of rotations, or at a very specific
-speed.

@@ -1,8 +1,0 @@
-RB-05
-
-DESCRIPTION:
-I can describe how to use a distance sensor in programming.
-
-CRITERIA:
-The student can describe how a distance sensor works (what data is returns) and how it might be used
-in programming a robot.

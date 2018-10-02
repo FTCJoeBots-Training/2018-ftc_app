@@ -1,8 +1,0 @@
-RB-01
-
-DESCRIPTION:
-I can describe how a motor works.
-
-CRITERIA:
-The student can describe how a motor works (spinning multiple rotations in either direction) and
-where they might be used on a robot.
