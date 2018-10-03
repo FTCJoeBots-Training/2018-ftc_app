@@ -46,32 +46,36 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name = "Joseph 4kmotor Ramp Motor Speed", group = "Concept")
+@TeleOp(name = "Joseph 4 motor Ramp Motor Speed", group = "Concept")
 //@Disabled
 public class JosephConceptRampMotorSpeedtest extends LinearOpMode {
 
-    static final double INCREMENT   = 0.01;     // amount to ramp motor each CYCLE_MS cycle
-    static final int    CYCLE_MS    =   50;     // period of each cycle
-    static final double MAX_FWD     =  1.0;     // Maximum FWD power applied to motor
-    static final double MAX_REV     = -1.0;     // Maximum REV power applied to motor
+
+
 
     // Define class members
+
     DcMotor motor1;
+    double power1 =0;
     DcMotor motor2;
+    double  power2 =0;
     DcMotor motor3;
+    double  power3 =0;
     DcMotor motor4;
-    double  leftpower  = 0;
-    double  rightpower = 0;
+    double  power4=0;
+    double power5=0;
+   double power6=0;
+   double power7=0;
+   double power8=0;
     double forward;
     double clockwise;
     double right;
-    double k;
-    double max;
 
-   // boolean rampUp  = true;
+    boolean leftstick = false;
+    boolean rightstick  = false;
 
 
-    @Override
+    //@Override
     public void runOpMode() {
 
         // Connect to motor (Assume standard left wheel)
@@ -89,41 +93,45 @@ public class JosephConceptRampMotorSpeedtest extends LinearOpMode {
         while(opModeIsActive()) {
             //odds are left power vice versa
             // Map "power" variable to gamepad input
-            leftpower = gamepad1.left_stick_y;
-            rightpower = -gamepad1.right_stick_y;
-            motor1.setPower(leftpower);
-            motor2.setPower(rightpower);
-            motor3.setPower(leftpower);
-            motor4.setPower(rightpower);
+            power1 = gamepad1.left_stick_y;
+            power2 = gamepad1.left_stick_y;
+            power3 = -gamepad1. right_stick_y;
+            power4 = -gamepad1. right_stick_y;
 
+
+            forward = -gamepad1.left_stick_y;
+            right = -gamepad1.left_trigger + gamepad1.right_trigger;
+            clockwise = gamepad1.right_stick_x;
 
 
             // Display the current value
-            telemetry.addData("Motor Power", "%5.2f", leftpower);
+            telemetry.addData("Motor Power", "%5.2f", power1);
             telemetry.addData(">", "Press Stop to end test." );
             telemetry.update();
             // Display the current value
-            telemetry.addData("Motor Power", "%5.2f", rightpower);
+            telemetry.addData("Motor Power", "%5.2f", power2);
+            telemetry.addData(">", "Press Stop to end test." );
+            telemetry.update();
+            telemetry.addData("Motor Power", "%5.2f", power3);
+            telemetry.addData(">", "Press Stop to end test." );
+            telemetry.update();
+            telemetry.addData("Motor Power", "%5.2f", power4);
             telemetry.addData(">", "Press Stop to end test." );
             telemetry.update();
 
             // Set the motor to the new power and pause;
-            motor1.setPower(leftpower);
-            motor2.setPower(rightpower);
-            motor3.setPower(leftpower);
-            motor4.setPower(rightpower);
 
             //sleep(CYCLE_MS);
             idle();
         }
 
         // Turn off motor and signal done;
-        motor1.setPower(1);
-        motor2.setPower(2);
-        motor3.setPower(3);
-        motor4.setPower(4);
-        telemetry.addData(">", "Done");
-        telemetry.update();
+        motor1.setPower(0);
+        motor2.setPower(0);
+        motor3.setPower(0);
+        motor4.setPower(0);
+
+
 
         motor1.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motor2.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
@@ -131,10 +139,15 @@ public class JosephConceptRampMotorSpeedtest extends LinearOpMode {
         motor4.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
 
 
-        motor1.setPower(1);
-        motor2.setPower(2);
-        motor3.setPower(3);
-        motor4.setPower(4);
+        motor1.setPower(0);
+        motor2.setPower(0);
+        motor3.setPower(0);
+        motor4.setPower(0);
+
+        power5=0;
+        power6=0;
+        power7=0;
+        power8=0;
 
     }
 }
