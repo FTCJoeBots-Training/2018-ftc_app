@@ -56,6 +56,7 @@ public class Anirudh_all4motor_testdrive extends LinearOpMode {
     static final double MAX_REV = -1.0;     // Maximum REV power applied to motor
 
     // Define class members
+    double strafeL = 0;
     DcMotor motor1;
     double power1 = 0;
     DcMotor motor2;
@@ -64,10 +65,15 @@ public class Anirudh_all4motor_testdrive extends LinearOpMode {
     double power3 = 0;
     DcMotor motor4;
     double power4 = 0;
-    double max;
-    double forward;
-    double clockwise;
-    double right;
+    double power5 = 0;
+    double power6 = 0;
+    double power7 = 0;
+    double power8 = 0;
+
+
+
+    boolean leftstick = false;
+    boolean rightstick = false;
 
     @Override
     public void runOpMode() {
@@ -96,41 +102,37 @@ public class Anirudh_all4motor_testdrive extends LinearOpMode {
         // Ramp motor speeds till stop pressed.
         while (opModeIsActive()) {
 
-            //Drive Via "Analog Sticks" (Not Toggle)
-            //Set initial motion parameters to Gamepad1 Inputs
-            forward = -gamepad1.left_stick_y;
-            //right = gamepad1.left_stick_x;
-            right = -gamepad1.left_trigger + gamepad1.right_trigger;
-            clockwise = gamepad1.right_stick_x;
+            power1 = gamepad1.left_stick_y;
 
-            power1 = forward + clockwise + right;
-            power2 = forward - clockwise - right;
-            power3 = forward + clockwise - right;
-            power4 = forward - clockwise + right;
+            power2 = gamepad1.left_stick_y;
 
-            // Normalize Wheel speeds so that no speed exceeds 1.0
-            max = Math.abs(power1);
-            if (Math.abs(power2) > max) {
-                max = Math.abs(power2);
-            }
-            if (Math.abs(power3) > max) {
-                max = Math.abs(power3);
-            }
-            if (Math.abs(power4) > max) {
-                max = Math.abs(power4);
-            }
+            power3 = gamepad1.right_stick_x;
 
-            if (max > 1) {
-                power1 /= max;
-                power2 /= max;
-                power3 /= max;
-                power4 /= max;
-            }
+            power4 = gamepad1.right_stick_x;
 
-            motor1.setPower(power1);
-            motor2.setPower(power2);
-            motor3.setPower(power3);
-            motor4.setPower(power4);
+            strafeL = gamepad1.left_trigger;
+
+            if (leftstick = false) {
+
+                power5=strafeL;
+                power6=strafeL;
+                power7=strafeL;
+                power8=strafeL;
+
+
+
+                motor1.setPower(power1);
+                motor2.setPower(power2);
+                motor3.setPower(power3);
+                motor4.setPower(power4);
+
+                if(leftstick=false){
+                    motor1.setPower(power5);
+                    motor2.setPower(power6);
+                    motor3.setPower(power7);
+                    motor4.setPower(power8);
+
+                }
 
 
                 // Display the current value
@@ -164,5 +166,5 @@ public class Anirudh_all4motor_testdrive extends LinearOpMode {
 
         }
     }
-
+}
 
