@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 /**
  *import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -50,10 +51,12 @@ public class teleOpSimpleMecanumMariah extends LinearOpMode {
 
         waitForStart();
 
-
         //start of loop
+        while (opModeIsActive()) {
 
-            forward=1;
+            //start of loop
+
+            /*forward=1;
             right=0;
             clockwise=0;
             robot.moveRobot(forward, right, clockwise);
@@ -61,23 +64,51 @@ public class teleOpSimpleMecanumMariah extends LinearOpMode {
             forward=0;
             right=0;
             clockwise=0;
-            robot.moveRobot(forward, right, clockwise);
+            robot.moveRobot(forward, right, clockwise);*/
 
             //Drive Via "Analog Sticks" (Not Toggle)
             //Set initial motion parameters to Gamepad1 Inputs
-           // forward = -gamepad1.left_stick_y;
-            //right = gamepad1.left_stick_x;
-            //right = -gamepad1.left_trigger + gamepad1.right_trigger;
-            //clockwise = gamepad1.right_stick_x;
+            forward = -gamepad1.left_stick_y;
+            right = gamepad1.left_stick_x;
+            right = -gamepad1.left_trigger + gamepad1.right_trigger;
+            clockwise = gamepad1.right_stick_x;
 
+            // Calculate motor power
+            power1 = forward + clockwise + right;
+            power2 = forward - clockwise - right;
+            power3 = forward + clockwise - right;
+            power4 = forward - clockwise + right;
 
+            // Normalize Wheel speeds so that no speed exceeds 1.0
+            max = Math.abs(power1);
+            if (Math.abs(power2) > max) {
+                max = Math.abs(power2);
+            }
+            if (Math.abs(power3) > max) {
+                max = Math.abs(power3);
+            }
+            if (Math.abs(power4) > max) {
+                max = Math.abs(power4);
+            }
+
+            if (max > 1) {
+                power1 /= max;
+                power2 /= max;
+                power3 /= max;
+                power4 /= max;
+            }
+
+            robot.motor1.setPower(power1);
+            robot.motor2.setPower(power2);
+            robot.motor3.setPower(power3);
+            robot.motor4.setPower(power4);
 
             // Update Telemetry
             telemetry.addData(">", "Press Stop to end test.");
             telemetry.update();
             idle();
 
-
+        }
 
 
 
