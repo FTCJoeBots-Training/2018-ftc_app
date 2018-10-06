@@ -122,6 +122,8 @@ public class ashtonColorSensor extends LinearOpMode {
             telemetry.addData("Green", sensorColor.green());
             telemetry.addData("Blue ", sensorColor.blue());
             telemetry.addData("Hue", hsvValues[0]);
+            telemetry.addData("saturation" , hsvValues[1]);
+
 
             // change the background color to match the color detected by the RGB sensor.
             // pass a reference to the hue, saturation, and value array as an argument
@@ -131,6 +133,11 @@ public class ashtonColorSensor extends LinearOpMode {
                     relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
                 }
             });
+            if (hsvValues[0] >= 10) {
+                telemetry.addLine("its a yellow");
+            }
+
+
 
             telemetry.update();
         }
