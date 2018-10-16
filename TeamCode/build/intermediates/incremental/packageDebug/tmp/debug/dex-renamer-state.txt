@@ -1,4 +1,0 @@
-#Sat Sep 29 08:05:32 EDT 2018
-base.0=/Users/fisbegc/Documents/OneDrive/Personal/FTC/FTCJoeBots-Training/2018-ftc_app/TeamCode/build/intermediates/transforms/dexMerger/debug/0
-path.0=classes.dex
-renamed.0=classes.dex

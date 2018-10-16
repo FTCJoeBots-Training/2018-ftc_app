@@ -20,8 +20,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 /**
  * This is NOT an opmode. This is a hardware class used to abstract the hardware config for the
- * 2017 FTC Relic Recovery challenge. This file has been generalized to work for both JoeBots
- * teams FTC 11855 and 13702.
+ * 2018 JoeBots FTC Rover Ruckus challenge. This file has been generalized to work as a base for
+ * all three JoeBots FTC teams (8513, 11855, and 13702). As the season progresses, this file may be
+ * customized for each individual team in their own branch.
  *
  * This hardware class assumes the following device names have been configured on the robot:
  *
@@ -29,12 +30,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  * motor2 (right front)
  * motor3 (left rear)
  * motor4 (right rear)
- * liftmotor (on the Modern Robotics controller) - lift glyph mechanism up/down
- * clampservo - open/close clamp
- * clamprotate - rotate clamp mechanism up/down
- * jewelservo - rotate jewel arm up/down
  * imu - navigation features
- * jewelsensor - detect jewel colors
  *
  * Note:  All names are lower case and some have single spaces between words.
  *
