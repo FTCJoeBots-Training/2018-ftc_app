@@ -49,7 +49,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 public class autoTestMecanumMoveCommands extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareJoeBot2018      robot   = new HardwareJoeBot2018();
+    yimoHardwareJoeBots      robot   = new yimoHardwareJoeBots();
 
     @Override
     public void runOpMode() {
