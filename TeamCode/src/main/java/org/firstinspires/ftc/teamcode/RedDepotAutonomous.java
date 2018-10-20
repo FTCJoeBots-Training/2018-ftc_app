@@ -30,12 +30,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 /**
  *
@@ -44,12 +40,12 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  *
  */
 
-@Autonomous(name="Mecanum Code Testing", group="Testing")
+@Autonomous(name="RedDepotAutonomous", group="8513")
 //@Disabled
-public class autoTestMecanumMoveCommands extends LinearOpMode {
+public class RedDepotAutonomous extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareJoeBot2018      robot   = new HardwareJoeBot2018();
+    AshtonHardwareJoeBot2018      robot   = new AshtonHardwareJoeBot2018();
 
     @Override
     public void runOpMode() {
@@ -71,17 +67,17 @@ public class autoTestMecanumMoveCommands extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        robot.moveInches(12, 0.3, 15);
-        robot.rotate(90,0.15);
+        robot.moveInches(15, 0.75, 15);
+        robot.rotate(87,0.15);
 
-        robot.moveInches(12, 0.3, 15);
-        robot.rotate(90,0.15);
+        robot.moveInches(43, 0.75, 15);
+        robot.rotate(-128,0.15);
 
-        robot.moveInches(12, 0.3, 15);
-        robot.rotate(90,0.15);
+        robot.moveInches(50, 0.75, 15);
+        //robot.rotate(90,0.15);
 
-        robot.moveInches(12, 0.3, 15);
-        robot.rotate(90,0.15);
+        robot.moveInches(-12, 0.3, 15);
+        //robot.rotate(90,0.15);
 
 
     }

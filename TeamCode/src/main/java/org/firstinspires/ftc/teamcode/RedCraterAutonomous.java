@@ -40,9 +40,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  *
  */
 
-@Autonomous(name="BlueCraterAutonomous", group="8513")
+@Autonomous(name="RedCraterAutonomous", group="8513")
 //@Disabled
-public class BlueCraterAutonomous extends LinearOpMode {
+public class RedCraterAutonomous extends LinearOpMode {
 
     /* Declare OpMode members. */
     AshtonHardwareJoeBot2018      robot   = new AshtonHardwareJoeBot2018();
@@ -67,13 +67,13 @@ public class BlueCraterAutonomous extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        robot.moveInches(16.5, 0.75, 15);
-        robot.rotate(-90,0.25);
+        //robot.moveInches(15, 0.75, 15);
+        //robot.rotate(87,0.15);
 
-        robot.moveInches(44, 0.75, 15);
-        robot.rotate(-48,0.25);
+        //robot.moveInches(43, 0.75, 15);
+        //robot.rotate(-128,0.15);
 
-        robot.moveInches(35, 0.75, 15);
+        //robot.moveInches(50, 0.75, 15);
         //robot.rotate(90,0.15);
 
         //robot.moveInches(12, 0.3, 15);
