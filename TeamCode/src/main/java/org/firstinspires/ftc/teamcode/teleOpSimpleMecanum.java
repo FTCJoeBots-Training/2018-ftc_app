@@ -97,7 +97,7 @@ public class teleOpSimpleMecanum extends LinearOpMode {
             robot.motor1.setPower(power1);
             robot.motor2.setPower(power2);
             robot.motor3.setPower(power3);
-            robot.motor4.setPower(power4);
+            robot.motor0.setPower(power4);
             //------------------------------------------
             //-------------------------------------------
 

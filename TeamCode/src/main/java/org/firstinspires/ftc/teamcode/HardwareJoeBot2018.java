@@ -21,10 +21,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  *
  * This hardware class assumes the following device names have been configured on the robot:
  *
- * motor1 (left front)
- * motor2 (right front)
- * motor3 (left rear)
- * motor4 (right rear)
+ * motor0 (left front)
+ * motor1 (right front)
+ * motor2 (left rear)
+ * motor3 (right rear)
  * imu - navigation features
  *
  * Note:  All names are lower case and some have single spaces between words.
@@ -36,10 +36,10 @@ public class HardwareJoeBot2018
     /* Public OpMode members. */
 
     // Declare Motors
-    public DcMotor  motor1 = null; // Left Front
-    public DcMotor  motor2 = null; // Right Front
-    public DcMotor  motor3 = null; // Left Rear
-    public DcMotor  motor4 = null; // Right Rear
+    public DcMotor  motor0 = null; // Left Front
+    public DcMotor  motor1 = null; // Right Front
+    public DcMotor  motor2 = null; // Left Rear
+    public DcMotor  motor3 = null; // Right Rear
 
     // Declare Sensors
     public BNO055IMU imu;                  // The IMU sensor object
@@ -79,29 +79,29 @@ public class HardwareJoeBot2018
         myOpMode = opMode;
 
         // Define and Initialize Motors
+        motor0 = hwMap.dcMotor.get("motor0");
         motor1 = hwMap.dcMotor.get("motor1");
         motor2 = hwMap.dcMotor.get("motor2");
         motor3 = hwMap.dcMotor.get("motor3");
-        motor4 = hwMap.dcMotor.get("motor4");
 
         // Set Default Motor Directions
-        motor1.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-        motor2.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
-        motor3.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-        motor4.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
+        motor0.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        motor1.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
+        motor2.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        motor3.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
 
         // Set all motors to zero power
+        motor0.setPower(0);
         motor1.setPower(0);
         motor2.setPower(0);
         motor3.setPower(0);
-        motor4.setPower(0);
 
         // Set all drive motors to run without encoders.
         // May want to switch to  RUN_USING_ENCODERS during autonomous
+        motor0.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motor4.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         // IMU Initializaiton
@@ -153,10 +153,10 @@ public class HardwareJoeBot2018
      * @param mode    Desired Motor mode.
      */
     public void setMode(DcMotor.RunMode mode ) {
+        motor0.setMode(mode);
         motor1.setMode(mode);
         motor2.setMode(mode);
         motor3.setMode(mode);
-        motor4.setMode(mode);
     }
 
     /**
@@ -203,10 +203,10 @@ public class HardwareJoeBot2018
             power4 /= max;
         }
 
-        motor1.setPower(power1);
-        motor2.setPower(power2);
-        motor3.setPower(power3);
-        motor4.setPower(power4);
+        motor0.setPower(power1);
+        motor1.setPower(power2);
+        motor2.setPower(power3);
+        motor3.setPower(power4);
 
     }
 
@@ -220,10 +220,10 @@ public class HardwareJoeBot2018
 
     public void stop() {
 
+        motor0.setPower(0);
         motor1.setPower(0);
         motor2.setPower(0);
         motor3.setPower(0);
-        motor4.setPower(0);
 
     }
 
@@ -248,25 +248,25 @@ public class HardwareJoeBot2018
         myOpMode.telemetry.log().add("Starting moveInches method");
 
         // Declare needed variables
-        int newMotor1Target;
-        int newMotor2Target;
-        int newMotor3Target;
-        int newMotor4Target;
+        int newmotor0Target;
+        int newmotor1Target;
+        int newmotor2Target;
+        int newmotor3Target;
 
         // Check to make sure the OpMode is still active; If it isn't don't run the method
         if(myOpMode.opModeIsActive()) {
 
             // Determine new target positions for each wheel
-            newMotor1Target = motor1.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
-            newMotor2Target = motor2.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
-            newMotor3Target = motor3.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
-            newMotor4Target = motor4.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
+            newmotor0Target = motor0.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
+            newmotor1Target = motor1.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
+            newmotor2Target = motor2.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
+            newmotor3Target = motor3.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
 
             // Send target Positions to motors
-            motor1.setTargetPosition(newMotor1Target);
-            motor2.setTargetPosition(newMotor2Target);
-            motor3.setTargetPosition(newMotor3Target);
-            motor4.setTargetPosition(newMotor4Target);
+            motor0.setTargetPosition(newmotor0Target);
+            motor1.setTargetPosition(newmotor1Target);
+            motor2.setTargetPosition(newmotor2Target);
+            motor3.setTargetPosition(newmotor3Target);
 
             // Set Robot to RUN_TO_POSITION mode
             setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -279,21 +279,21 @@ public class HardwareJoeBot2018
 
             // Keep looping (wait) until the motors are finished or timeout is reached.
             while (myOpMode.opModeIsActive() && (runtime.seconds() < timeoutSec) &&
-                    (motor1.isBusy() && motor2.isBusy() && motor3.isBusy() && motor4.isBusy())) {
+                    (motor0.isBusy() && motor1.isBusy() && motor2.isBusy() && motor3.isBusy())) {
 
 
                 //Compose Telemetry message
                 myOpMode.telemetry.addLine("> Waiting for robot to reach target");
                 myOpMode.telemetry.addLine("Curr. Pos. |")
-                        .addData("1:",motor1.getCurrentPosition())
-                        .addData("2:",motor2.getCurrentPosition())
-                        .addData("3:",motor3.getCurrentPosition())
-                        .addData("4:",motor4.getCurrentPosition());
+                        .addData("1:",motor0.getCurrentPosition())
+                        .addData("2:",motor1.getCurrentPosition())
+                        .addData("3:",motor2.getCurrentPosition())
+                        .addData("4:",motor3.getCurrentPosition());
                 myOpMode.telemetry.addLine("Target | ")
-                        .addData("1:",newMotor1Target)
-                        .addData("2:",newMotor2Target)
-                        .addData("3:",newMotor3Target)
-                        .addData("4:",newMotor4Target);
+                        .addData("1:",newmotor0Target)
+                        .addData("2:",newmotor1Target)
+                        .addData("3:",newmotor2Target)
+                        .addData("4:",newmotor3Target);
                 myOpMode.telemetry.addData("Power: ", power);
                 myOpMode.telemetry.update();
 
@@ -312,6 +312,97 @@ public class HardwareJoeBot2018
         }
 
     }
+
+    /**
+     *
+     * moveInches(double inches, double power)
+     *
+     * method to drive forward (only) for a set # of inches at a set power
+     *
+     * @param inches
+     * @param power
+     * @param timeoutSec
+     *
+     */
+
+    public void strafeInches(double inches, double power, int timeoutSec) {
+
+        // method will accept a value in inches and a power setting and calculate the number of
+        // rotations required to drive the given distance.
+
+        double frontPower = power;
+        double rearPower = -power;
+
+
+        // Tell Telemetry what we're starting
+        myOpMode.telemetry.log().add("Starting moveInches method");
+
+        // Declare needed variables
+        int newmotor0Target;
+        int newmotor1Target;
+        int newmotor2Target;
+        int newmotor3Target;
+
+        // Check to make sure the OpMode is still active; If it isn't don't run the method
+        if(myOpMode.opModeIsActive()) {
+
+            // Determine new target positions for each wheel
+            newmotor0Target = motor0.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
+            newmotor1Target = motor1.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
+            newmotor2Target = motor2.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
+            newmotor3Target = motor3.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
+
+            // Send target Positions to motors
+            motor0.setTargetPosition(newmotor0Target);
+            motor1.setTargetPosition(newmotor1Target);
+            motor2.setTargetPosition(newmotor2Target);
+            motor3.setTargetPosition(newmotor3Target);
+
+            // Set Robot to RUN_TO_POSITION mode
+            setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Reset the runtime
+            runtime.reset();
+
+            // Start moving the robot
+            moveRobot(power,0,0);
+
+            // Keep looping (wait) until the motors are finished or timeout is reached.
+            while (myOpMode.opModeIsActive() && (runtime.seconds() < timeoutSec) &&
+                    (motor0.isBusy() && motor1.isBusy() && motor2.isBusy() && motor3.isBusy())) {
+
+
+                //Compose Telemetry message
+                myOpMode.telemetry.addLine("> Waiting for robot to reach target");
+                myOpMode.telemetry.addLine("Curr. Pos. |")
+                        .addData("1:",motor0.getCurrentPosition())
+                        .addData("2:",motor1.getCurrentPosition())
+                        .addData("3:",motor2.getCurrentPosition())
+                        .addData("4:",motor3.getCurrentPosition());
+                myOpMode.telemetry.addLine("Target | ")
+                        .addData("1:",newmotor0Target)
+                        .addData("2:",newmotor1Target)
+                        .addData("3:",newmotor2Target)
+                        .addData("4:",newmotor3Target);
+                myOpMode.telemetry.addData("Power: ", power);
+                myOpMode.telemetry.update();
+
+                myOpMode.idle();
+            }
+
+            // Stop the motors
+            stop();
+
+            // Update telemetry log
+            myOpMode.telemetry.log().add("Ending moveInches method");
+
+            // Set the motors back to standard mode
+            setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        }
+
+    }
+
 
     /**
      *

@@ -26,10 +26,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  *
  * This hardware class assumes the following device names have been configured on the robot:
  *
- * motor1 (left front)
- * motor2 (right front)
- * motor3 (left rear)
- * motor4 (right rear)
+ * motor0 (left front)
+ * motor1 (right front)
+ * motor2 (left rear)
+ * motor3 (right rear)
  * imu - navigation features
  *
  * Note:  All names are lower case and some have single spaces between words.
@@ -41,10 +41,10 @@ public class HardwareJoeBot
     /* Public OpMode members. */
 
     // Declare Motors
-    public DcMotor  motor1 = null; // Left Front
-    public DcMotor  motor2 = null; // Right Front
-    public DcMotor  motor3 = null; // Left Rear
-    public DcMotor  motor4 = null; // Right Rear
+    public DcMotor  motor0 = null; // Left Front
+    public DcMotor  motor1 = null; // Right Front
+    public DcMotor  motor2 = null; // Left Rear
+    public DcMotor  motor3 = null; // Right Rear
 
     // Declare Sensors
     public BNO055IMU imu;                  // The IMU sensor object
@@ -73,29 +73,29 @@ public class HardwareJoeBot
         myOpMode = opMode;
 
         // Define and Initialize Motors
+        motor0 = hwMap.dcMotor.get("motor0");
         motor1 = hwMap.dcMotor.get("motor1");
         motor2 = hwMap.dcMotor.get("motor2");
         motor3 = hwMap.dcMotor.get("motor3");
-        motor4 = hwMap.dcMotor.get("motor4");
 
         // Set Default Motor Directions
-        motor1.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-        motor2.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
-        motor3.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-        motor4.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
+        motor0.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        motor1.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
+        motor2.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        motor3.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
 
         // Set all motors to zero power
+        motor0.setPower(0);
         motor1.setPower(0);
         motor2.setPower(0);
         motor3.setPower(0);
-        motor4.setPower(0);
 
         // Set all drive motors to run without encoders.
         // May want to switch to  RUN_USING_ENCODERS during autonomous
+        motor0.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motor4.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         // IMU Initializaiton
@@ -147,10 +147,10 @@ public class HardwareJoeBot
      * @param mode    Desired Motor mode.
      */
     public void setMode(DcMotor.RunMode mode ) {
+        motor0.setMode(mode);
         motor1.setMode(mode);
         motor2.setMode(mode);
         motor3.setMode(mode);
-        motor4.setMode(mode);
     }
 
 
