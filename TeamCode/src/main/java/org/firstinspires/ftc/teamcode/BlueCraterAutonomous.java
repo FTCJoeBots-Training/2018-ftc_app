@@ -64,19 +64,20 @@ public class BlueCraterAutonomous extends LinearOpMode {
 
         robot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        // Wait for the game to start (driver presses PLAY)
+        // Wait f
+        // bor the game to start (driver presses PLAY)
         waitForStart();
 
         robot.moveInches(16.5, 0.65, 15);
         robot.rotate(-84,0.25);
 
-        robot.moveInches(46, 0.65, 15);
-        robot.rotate(-32,0.25);
+        robot.moveInches(48, 0.65, 15);
+        robot.rotate(-30,0.25);
 
         robot.moveInches(35, 0.65, 15);
-        //robot.rotate(90,0.15);
+        robot.rotate(180,0.15);
 
-        //robot.moveInches(12, 0.3, 15);
+        robot.moveInches(63, 0.3, 15);
         //robot.rotate(90,0.15);
 
 
