@@ -31,7 +31,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  *
  */
 
-public class HardwareJoeBot2018
+public class HardwareJoeBot2018jack2
 {
     /* Public OpMode members. */
 
@@ -67,7 +67,7 @@ public class HardwareJoeBot2018
 
 
     /* Constructor */
-    public HardwareJoeBot2018(){
+    public HardwareJoeBot2018jack2(){
 
     }
 
@@ -79,10 +79,10 @@ public class HardwareJoeBot2018
         myOpMode = opMode;
 
         // Define and Initialize Motors
-        motor1 = hwMap.dcMotor.get("motor1");
-        motor2 = hwMap.dcMotor.get("motor2");
-        motor3 = hwMap.dcMotor.get("motor3");
-        motor4 = hwMap.dcMotor.get("motor4");
+        motor1 = hwMap.dcMotor.get("motor0");
+        motor2 = hwMap.dcMotor.get("motor1");
+        motor3 = hwMap.dcMotor.get("motor2");
+        motor4 = hwMap.dcMotor.get("motor3");
 
         // Set Default Motor Directions
         motor1.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
@@ -376,7 +376,9 @@ public class HardwareJoeBot2018
 
     public void rotate(int degrees, double power){
 
-
+        //Declare a variable for the difference in current angle versus target angle
+        double difference=0;
+        //
 
         myOpMode.telemetry.log().add("Starting rotate method");
 
@@ -387,9 +389,18 @@ public class HardwareJoeBot2018
         // set power (speed) negative when turning right
         if (degrees > 0 ) power = -power;
 
-        // start robot turning
 
+        //Check the difference between the current and target angle
+        difference = degrees - getAngle();
+        //take the absolute value of difference
+        difference=Math.abs(difference);
+
+
+
+        //Set power as a fraction of the distance
+        //power = power*difference/180;
         moveRobot(0,0,power);
+
 
         // stop turning when getAngle() returns a value greater or less than intended degrees
         if (degrees < 0) {
@@ -397,28 +408,58 @@ public class HardwareJoeBot2018
             // On a right turn, since we start on zero, we have to get off zero first
 
             while (myOpMode.opModeIsActive() && getAngle() == 0) {
+                //Check the difference between the current and target angle
+                difference = degrees - getAngle();
+                //take the absolute value of difference
+                difference=Math.abs(difference);
+                power = .9*difference/180;
+                if (power <.1)
+                    {power = .1;}
+                moveRobot(0,0,power);
                 myOpMode.telemetry.addLine(">getAngle() returned 0");
                 myOpMode.telemetry.addLine(">>")
                         .addData("Cur: ", getAngle())
-                        .addData("Tar: ", degrees);
+                        .addData( "\nPower", power)
+                        .addData("\nDifference", difference)
+                        .addData("\nTar: ", degrees);
                 myOpMode.telemetry.update();
             }
 
             while (myOpMode.opModeIsActive() && getAngle() > degrees) {
+                //Check the difference between the current and target angle
+                difference = degrees - getAngle();
+                //take the absolute value of difference
+                difference=Math.abs(difference);
+                power = .9*difference/180;
+                if (power <.1)
+                {power = .1;}
+                moveRobot(0,0,power);
                 myOpMode.telemetry.addLine(">getAngle() returned >0");
                 myOpMode.telemetry.addLine(">>")
                         .addData("Cur: ", getAngle())
-                        .addData("Tar: ", degrees);
+                        .addData("\nPower", power)
+                        .addData("\nDifference:",difference)
+                        .addData("\nTar: ", degrees);
                 myOpMode.telemetry.update();
             }
         } else {
             // left turn
 
             while (myOpMode.opModeIsActive() && getAngle() < degrees) {
+                //Check the difference between the current and target angle
+                difference = degrees + getAngle();
+                //take the absolute value of difference
+                difference=Math.abs(difference);
+                power = .9*difference/180;
+                if (power <.1)
+                {power = .1;}
+                moveRobot(0,0,power);
                 myOpMode.telemetry.addLine(">getAngle() returned <0");
                 myOpMode.telemetry.addLine(">>")
                         .addData("Cur: ", getAngle())
-                        .addData("Tar: ", degrees);
+                        .addData("\nPower:",power)
+                        .addData("\nDifference",difference)
+                        .addData("\nTar: ", degrees);
                 myOpMode.telemetry.update();
             }
 

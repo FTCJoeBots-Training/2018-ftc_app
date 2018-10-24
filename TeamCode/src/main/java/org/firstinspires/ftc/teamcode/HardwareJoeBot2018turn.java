@@ -31,7 +31,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  *
  */
 
-public class HardwareJoeBot2018
+public class HardwareJoeBot2018turn
 {
     /* Public OpMode members. */
 
@@ -67,7 +67,7 @@ public class HardwareJoeBot2018
 
 
     /* Constructor */
-    public HardwareJoeBot2018(){
+    public HardwareJoeBot2018turn(){
 
     }
 
@@ -79,10 +79,10 @@ public class HardwareJoeBot2018
         myOpMode = opMode;
 
         // Define and Initialize Motors
-        motor1 = hwMap.dcMotor.get("motor1");
-        motor2 = hwMap.dcMotor.get("motor2");
-        motor3 = hwMap.dcMotor.get("motor3");
-        motor4 = hwMap.dcMotor.get("motor4");
+        motor1 = hwMap.dcMotor.get("motor0");
+        motor2 = hwMap.dcMotor.get("motor1");
+        motor3 = hwMap.dcMotor.get("motor2");
+        motor4 = hwMap.dcMotor.get("motor3");
 
         // Set Default Motor Directions
         motor1.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
@@ -376,6 +376,17 @@ public class HardwareJoeBot2018
 
     public void rotate(int degrees, double power){
 
+//*************************************************************************************
+
+        //Declare a variable for the difference in current angle versus target angle
+
+        double difference=0;
+
+        //
+
+//************************************************************************************
+
+
 
 
         myOpMode.telemetry.log().add("Starting rotate method");
@@ -387,9 +398,49 @@ public class HardwareJoeBot2018
         // set power (speed) negative when turning right
         if (degrees > 0 ) power = -power;
 
+
+        //*******************************************************************************************
+
+        //Check the difference between the current and target angle
+
+        //For what we're doing it's easier to get the difference of the
+
+        //absolute value of the target angle and the absolute value of the current angle
+
+        //This assumes "degrees" will be 0->180 or 0->-179
+
+        difference = Math.abs(degrees) - Math.abs(getAngle());
+
+//********************************************************************************************
+
+
+
+
         // start robot turning
 
         moveRobot(0,0,power);
+
+
+//******************************************************************************************
+
+        //Take the power down as we approach where we're going
+
+        // At 8 degrees, go to 70% power
+
+        if (difference < 8)
+
+        {    power=power*.7;
+             moveRobot(0,0,power);     }
+
+        // At 3 degrees, go to 50% power
+
+        if (difference < 3)
+
+        {   power=power*.5;
+            moveRobot(0,0,power);   }
+
+//********************************************************************************************
+
 
         // stop turning when getAngle() returns a value greater or less than intended degrees
         if (degrees < 0) {
@@ -400,6 +451,8 @@ public class HardwareJoeBot2018
                 myOpMode.telemetry.addLine(">getAngle() returned 0");
                 myOpMode.telemetry.addLine(">>")
                         .addData("Cur: ", getAngle())
+                        .addData("\nPower", power)
+                        .addData("\nDifference:",difference)
                         .addData("Tar: ", degrees);
                 myOpMode.telemetry.update();
             }
@@ -408,6 +461,8 @@ public class HardwareJoeBot2018
                 myOpMode.telemetry.addLine(">getAngle() returned >0");
                 myOpMode.telemetry.addLine(">>")
                         .addData("Cur: ", getAngle())
+                        .addData("\nPower", power)
+                        .addData("\nDifference:",difference)
                         .addData("Tar: ", degrees);
                 myOpMode.telemetry.update();
             }
@@ -418,6 +473,8 @@ public class HardwareJoeBot2018
                 myOpMode.telemetry.addLine(">getAngle() returned <0");
                 myOpMode.telemetry.addLine(">>")
                         .addData("Cur: ", getAngle())
+                        .addData("\nPower", power)
+                        .addData("\nDifference:",difference)
                         .addData("Tar: ", degrees);
                 myOpMode.telemetry.update();
             }
