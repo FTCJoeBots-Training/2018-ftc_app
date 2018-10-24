@@ -74,7 +74,10 @@ public class YimoCrater8513 extends LinearOpMode {
 
        //robot.rotate(180,0.15);
 
-        //robot.moveInches(-32, 0.5, 15);
+        robot.moveInches(-32, 0.5, 15);
+        robot.moveInches(-25, 0.5, 10);
+        robot.rotate(-45, 0.15);
+        robot.moveInches(50, 0.5, 15);
         /*robot.rotate(90,0.15);
 
         robot.moveInches(12, 0.3, 15);
