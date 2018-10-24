@@ -245,20 +245,20 @@ public class HardwareJoeBot2018vuforia
         if (targetVisible) {
             // express position (translation) of robot in inches.
             VectorF translation = lastLocation.getTranslation();
-            myOpMode.telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
-                    translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
+            //myOpMode.telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
+            //        translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
 
             // express the rotation of the robot in degrees.
             Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
-            myOpMode.telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-            myOpMode.telemetry.update();
+            //myOpMode.telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+            //myOpMode.telemetry.update();
             //returning X,Y,and heading as an array
             //when we call this, we want                 double coordinates [] = robot.getvuforiaposition()
             return new double[] {translation.get(0),translation.get(1),rotation.thirdAngle};
         }
         else {
-            myOpMode.telemetry.addData("Visible Target", "none");
-            myOpMode.telemetry.update();
+            //myOpMode.telemetry.addData("Visible Target", "none");
+            //myOpMode.telemetry.update();
             return new double[] {-999.0,-999.0,-999.0};
         }
 

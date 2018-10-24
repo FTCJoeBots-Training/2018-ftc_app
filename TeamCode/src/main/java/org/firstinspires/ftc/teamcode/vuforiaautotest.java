@@ -30,12 +30,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 /**
  *
@@ -44,12 +40,12 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  *
  */
 
-@Autonomous(name="New Turn Test", group="Testing")
+@Autonomous(name="vuforia auto test", group="Testing")
 //@Disabled
-public class redDepot extends LinearOpMode {
+public class vuforiaautotest extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareJoeBot2018turn robot = new HardwareJoeBot2018turn();
+    HardwareJoeBot2018vuforia robot = new HardwareJoeBot2018vuforia();
 
     @Override
     public void runOpMode() {
@@ -70,8 +66,12 @@ public class redDepot extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-
         robot.moveInches(4,.4,5);
+        double coordinates [] = robot.getvuforiaposition();
+        telemetry.addData("X:", coordinates[0]);
+        telemetry.addData("Y:", coordinates[1]);
+        telemetry.addData("HEADING:", coordinates[2]);
+        telemetry.update();
 
 
 
