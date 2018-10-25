@@ -40,9 +40,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  *
  */
 
-@Autonomous(name="vuforia auto test", group="Testing")
+@Autonomous(name="Bluedepotvuforia", group="Testing")
 //@Disabled
-public class vuforiaautotest extends LinearOpMode {
+public class BlueDeoptvufoeia extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareJoeBot2018vuforia robot = new HardwareJoeBot2018vuforia();
@@ -68,15 +68,34 @@ public class vuforiaautotest extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        robot.moveInches(4,.4,5);
+        robot.moveInches(-12,.2,5);
+        robot.rotate(-90,.2);
+        robot.moveInches(16,.4,5);
+
+        //have vuforia find our position
+        sleep(2000);
         double coordinates [] = robot.getvuforiaposition();
         telemetry.addData("X:", coordinates[0]);
         telemetry.addData("Y:", coordinates[1]);
         telemetry.addData("HEADING:", coordinates[2]);
         telemetry.update();
+        sleep(2000);
+        double target_y=Math.abs(6-coordinates[1]);
+        telemetry.addData("Y value was:", coordinates[1]);
+        telemetry.addData("Vuforia says to go forward this far: ", target_y);
+        telemetry.update();
+        sleep(1000);
+        telemetry.addData("Moving this many inches:   ", target_y);
+        telemetry.update();
+        robot.moveInches(target_y,.4,3);
+        sleep(1000);
+        coordinates = robot.getvuforiaposition();
+        telemetry.addData("X:", coordinates[0]);
+        telemetry.addData("Y:", coordinates[1]);
+        telemetry.addData("HEADING:", coordinates[2]);
+        telemetry.update();
 
-
-
+        sleep(10000);
     }
 
 }

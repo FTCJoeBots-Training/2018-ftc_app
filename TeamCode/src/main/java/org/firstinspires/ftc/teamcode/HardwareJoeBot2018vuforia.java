@@ -87,6 +87,8 @@ public class HardwareJoeBot2018vuforia
     final int CAMERA_FORWARD_DISPLACEMENT  = 110;   // eg: Camera is 110 mm in front of robot center
     final int CAMERA_VERTICAL_DISPLACEMENT = 200;   // eg: Camera is 200 mm above ground
     final int CAMERA_LEFT_DISPLACEMENT     = 0;     // eg: Camera is ON the robot's center line
+    List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
+
     //end vuforia variables
 
     // Private Members
@@ -163,9 +165,8 @@ public class HardwareJoeBot2018vuforia
 
     }
 
-    public double[] getvuforiaposition()  {
 
-
+    public void vuforia_init() {
         int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
@@ -190,7 +191,6 @@ public class HardwareJoeBot2018vuforia
         backSpace.setName("Back-Space");
 
         // For convenience, gather together all the trackable objects in one easily-iterable collection */
-        List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
         allTrackables.addAll(targetsRoverRuckus);
 
         OpenGLMatrix blueRoverLocationOnField = OpenGLMatrix
@@ -217,14 +217,17 @@ public class HardwareJoeBot2018vuforia
                 .translation(CAMERA_FORWARD_DISPLACEMENT, CAMERA_LEFT_DISPLACEMENT, CAMERA_VERTICAL_DISPLACEMENT)
                 .multiplied(Orientation.getRotationMatrix(EXTRINSIC, YZX, DEGREES,
                         CAMERA_CHOICE == FRONT ? 90 : -90, 0, 0));
-
         /**  Let all the trackable listeners know where the phone is.  */
         for (VuforiaTrackable trackable : allTrackables)
         {
             ((VuforiaTrackableDefaultListener)trackable.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
         }
-
         targetsRoverRuckus.activate();
+
+    }
+
+    public double[] getvuforiaposition()  {
+
         // check all the trackable target to see which one (if any) is visible.
         targetVisible = false;
         for (VuforiaTrackable trackable : allTrackables) {
@@ -254,7 +257,7 @@ public class HardwareJoeBot2018vuforia
             //myOpMode.telemetry.update();
             //returning X,Y,and heading as an array
             //when we call this, we want                 double coordinates [] = robot.getvuforiaposition()
-            return new double[] {translation.get(0),translation.get(1),rotation.thirdAngle};
+            return new double[] {translation.get(0)/mmPerInch,translation.get(1)/mmPerInch,rotation.thirdAngle};
         }
         else {
             //myOpMode.telemetry.addData("Visible Target", "none");
