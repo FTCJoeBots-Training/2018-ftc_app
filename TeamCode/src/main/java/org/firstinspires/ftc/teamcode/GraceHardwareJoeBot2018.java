@@ -31,8 +31,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  *
  */
 
-public class
-HardwareJoeBot2018
+public class GraceHardwareJoeBot2018
 {
     /* Public OpMode members. */
 
@@ -68,7 +67,7 @@ HardwareJoeBot2018
 
 
     /* Constructor */
-    public HardwareJoeBot2018(){
+    public GraceHardwareJoeBot2018(){
 
     }
 
@@ -80,10 +79,10 @@ HardwareJoeBot2018
         myOpMode = opMode;
 
         // Define and Initialize Motors
-        motor1 = hwMap.dcMotor.get("motor1");
-        motor2 = hwMap.dcMotor.get("motor2");
-        motor3 = hwMap.dcMotor.get("motor3");
-        motor4 = hwMap.dcMotor.get("motor4");
+        motor1 = hwMap.dcMotor.get("motor0");
+        motor2 = hwMap.dcMotor.get("motor1");
+        motor3 = hwMap.dcMotor.get("motor2");
+        motor4 = hwMap.dcMotor.get("motor3");
 
         // Set Default Motor Directions
         motor1.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
@@ -350,6 +349,7 @@ HardwareJoeBot2018
 
         // Determine the difference between the current Angle reading and the last reset
         double deltaAngle = currAngles.firstAngle - lastImuAngles.firstAngle;
+        deltaAngle = -deltaAngle;// Changes the right turn so it's always positive
 
         // Since the Rev IMU measures in Euler angles (-180 <-> +180), we need to detect this
         if (deltaAngle < -180) deltaAngle += 360;
@@ -383,16 +383,17 @@ HardwareJoeBot2018
         resetAngle();
 
         // getAngle returns + when rotating counter clockwise and - when rotating clockwise
-        // set power (speed) negative when turning right
-        if (degrees < 0 ) power = -power;
+        // set power (speed) negative when turning left
+        //if (degrees > 0 ) power = -power;
+        if (degrees < 0) power = -power;
 
         // start robot turning
         moveRobot(0,0,power);
 
         // stop turning when getAngle() returns a value greater or less than intended degrees
         if (degrees < 0) {
-            // Expect this to be a right turn
-            // On a right turn, since we start on zero, we have to get off zero first
+            // Expect this to be a left turn
+            // On a left turn, since we start on zero, we have to get off zero first
 
             while (myOpMode.opModeIsActive() && getAngle() == 0) {
                 myOpMode.telemetry.addLine(">getAngle() returned 0");
@@ -410,7 +411,7 @@ HardwareJoeBot2018
                 myOpMode.telemetry.update();
             }
         } else {
-            // left turn
+            // right turn
 
             while (myOpMode.opModeIsActive() && getAngle() < degrees) {
                 myOpMode.telemetry.addLine(">getAngle() returned <0");
