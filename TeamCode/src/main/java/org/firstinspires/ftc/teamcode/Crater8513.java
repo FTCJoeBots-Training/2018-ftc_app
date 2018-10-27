@@ -40,12 +40,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  *
  */
 
-@Autonomous(name="YimoCrater8513", group="Testing")
+@Autonomous(name="Crater8513", group="Testing")
 //@Disabled
-public class YimoCrater8513 extends LinearOpMode {
+public class Crater8513 extends LinearOpMode {
 
     /* Declare OpMode members. */
-    yimoHardwareJoeBots      robot   = new yimoHardwareJoeBots();
+    HardwareJoeBot2018      robot   = new HardwareJoeBot2018();
 
     @Override
     public void runOpMode() {
@@ -64,19 +64,26 @@ public class YimoCrater8513 extends LinearOpMode {
 
         robot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        // Wait for the game to start (driver presses PLAY)
+        // Wait for the game to start (driver presses PLAY) q
+
         waitForStart();
 
-        robot.moveInches(16, 0.5, 15);
+
+
+        robot.moveInches(17, 0.5, 15);
         robot.rotate(89,0.15);
 
         robot.moveInches(16, 0.5, 15);
 
        //robot.rotate(180,0.15);
 
-        robot.moveInches(-32, 0.5, 15);
-        robot.moveInches(-25, 0.5, 10);
-        robot.rotate(-45, 0.15);
+        robot.moveInches(-16, 0.5, 15);
+
+        robot.moveInches(-16, 0.5, 15);
+        robot.moveInches(-20, 0.5, 10);
+        robot.rotate(45,0.15);
+        robot.moveInches(-7,0.5,10);
+        robot.rotate(-90, 0.15);
         robot.moveInches(50, 0.5, 15);
         /*robot.rotate(90,0.15);
 
