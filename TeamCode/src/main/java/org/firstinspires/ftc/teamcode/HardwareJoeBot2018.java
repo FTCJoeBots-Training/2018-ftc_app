@@ -31,15 +31,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  *
  */
 
-public class HardwareJoeBot2018
-{
+public class HardwareJoeBot2018 {
     /* Public OpMode members. */
 
     // Declare Motors
-    public DcMotor  motor0 = null; // Left Front
-    public DcMotor  motor1 = null; // Right Front
-    public DcMotor  motor2 = null; // Left Rear
-    public DcMotor  motor3 = null; // Right Rear
+    public DcMotor motor0 = null; // Left Front
+    public DcMotor motor1 = null; // Right Front
+    public DcMotor motor2 = null; // Left Rear
+    public DcMotor motor3 = null; // Right Rear
 
     // Declare Sensors
     public BNO055IMU imu;                  // The IMU sensor object
@@ -49,8 +48,8 @@ public class HardwareJoeBot2018
     public Acceleration gravity;
 
     /* local OpMode members. */
-    HardwareMap hwMap           =  null;
-    private ElapsedTime period  = new ElapsedTime();
+    HardwareMap hwMap = null;
+    private ElapsedTime period = new ElapsedTime();
 
     // Private Members
     private LinearOpMode myOpMode;
@@ -59,15 +58,15 @@ public class HardwareJoeBot2018
     private double globalAngle;
 
     // Declare Static members for calculations
-    static final double COUNTS_PER_MOTOR_REV    = 1120;
-    static final double DRIVE_GEAR_REDUCTION    = 1;
-    static final double WHEEL_DIAMETER_INCHES   = 4.0;
-    static final double COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+    static final double COUNTS_PER_MOTOR_REV = 1120;
+    static final double DRIVE_GEAR_REDUCTION = 1;
+    static final double WHEEL_DIAMETER_INCHES = 4.0;
+    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.14159);
 
 
     /* Constructor */
-    public HardwareJoeBot2018(){
+    public HardwareJoeBot2018() {
 
     }
 
@@ -109,11 +108,11 @@ public class HardwareJoeBot2018
         // algorithm here just reports accelerations to the logcat log; it doesn't actually
         // provide positional information.
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        parameters.loggingEnabled      = true;
-        parameters.loggingTag          = "IMU";
+        parameters.loggingEnabled = true;
+        parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
         // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
@@ -121,7 +120,6 @@ public class HardwareJoeBot2018
         // and named "imu".
         imu = hwMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
-
 
 
     }
@@ -137,7 +135,7 @@ public class HardwareJoeBot2018
      */
     public void waitForTick(long periodMs) throws InterruptedException {
 
-        long  remaining = periodMs - (long)period.milliseconds();
+        long remaining = periodMs - (long) period.milliseconds();
 
         // sleep for the remaining portion of the regular cycle period.
         if (remaining > 0)
@@ -152,7 +150,7 @@ public class HardwareJoeBot2018
      * void setMode(DcMotor.RunMode mode ) Set all drive motors to same mode.
      * @param mode    Desired Motor mode.
      */
-    public void setMode(DcMotor.RunMode mode ) {
+    public void setMode(DcMotor.RunMode mode) {
         motor0.setMode(mode);
         motor1.setMode(mode);
         motor2.setMode(mode);
@@ -160,15 +158,13 @@ public class HardwareJoeBot2018
     }
 
     /**
-     *
      * void moveRobot(double forward, double right, double clockwise)
-     *
+     * <p>
      * Calculates power settings for Mecanum drive for JoeBots
      *
      * @param forward
      * @param right
      * @param clockwise
-     *
      */
     public void moveRobot(double forward, double right, double clockwise) {
 
@@ -211,11 +207,9 @@ public class HardwareJoeBot2018
     }
 
     /**
-     *
      * stop()
-     *
+     * <p>
      * method to set all motor powers to zero
-     *
      */
 
     public void stop() {
@@ -228,15 +222,13 @@ public class HardwareJoeBot2018
     }
 
     /**
-     *
      * moveInches(double inches, double power)
-     *
+     * <p>
      * method to drive forward (only) for a set # of inches at a set power
      *
      * @param inches
      * @param power
      * @param timeoutSec
-     *
      */
 
     public void moveInches(double inches, double power, int timeoutSec) {
@@ -254,7 +246,7 @@ public class HardwareJoeBot2018
         int newmotor3Target;
 
         // Check to make sure the OpMode is still active; If it isn't don't run the method
-        if(myOpMode.opModeIsActive()) {
+        if (myOpMode.opModeIsActive()) {
 
             // Determine new target positions for each wheel
             newmotor0Target = motor0.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
@@ -275,7 +267,7 @@ public class HardwareJoeBot2018
             runtime.reset();
 
             // Start moving the robot
-            moveRobot(power,0,0);
+            moveRobot(power, 0, 0);
 
             // Keep looping (wait) until the motors are finished or timeout is reached.
             while (myOpMode.opModeIsActive() && (runtime.seconds() < timeoutSec) &&
@@ -285,15 +277,15 @@ public class HardwareJoeBot2018
                 //Compose Telemetry message
                 myOpMode.telemetry.addLine("> Waiting for robot to reach target");
                 myOpMode.telemetry.addLine("Curr. Pos. |")
-                        .addData("1:",motor0.getCurrentPosition())
-                        .addData("2:",motor1.getCurrentPosition())
-                        .addData("3:",motor2.getCurrentPosition())
-                        .addData("4:",motor3.getCurrentPosition());
+                        .addData("1:", motor0.getCurrentPosition())
+                        .addData("2:", motor1.getCurrentPosition())
+                        .addData("3:", motor2.getCurrentPosition())
+                        .addData("4:", motor3.getCurrentPosition());
                 myOpMode.telemetry.addLine("Target | ")
-                        .addData("1:",newmotor0Target)
-                        .addData("2:",newmotor1Target)
-                        .addData("3:",newmotor2Target)
-                        .addData("4:",newmotor3Target);
+                        .addData("1:", newmotor0Target)
+                        .addData("2:", newmotor1Target)
+                        .addData("3:", newmotor2Target)
+                        .addData("4:", newmotor3Target);
                 myOpMode.telemetry.addData("Power: ", power);
                 myOpMode.telemetry.update();
 
@@ -314,15 +306,13 @@ public class HardwareJoeBot2018
     }
 
     /**
-     *
      * moveInches(double inches, double power)
-     *
+     * <p>
      * method to drive forward (only) for a set # of inches at a set power
      *
      * @param inches
      * @param power
      * @param timeoutSec
-     *
      */
 
     public void strafeInches(double inches, double power, int timeoutSec) {
@@ -344,7 +334,7 @@ public class HardwareJoeBot2018
         int newmotor3Target;
 
         // Check to make sure the OpMode is still active; If it isn't don't run the method
-        if(myOpMode.opModeIsActive()) {
+        if (myOpMode.opModeIsActive()) {
 
             // Determine new target positions for each wheel
             newmotor0Target = motor0.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
@@ -365,7 +355,7 @@ public class HardwareJoeBot2018
             runtime.reset();
 
             // Start moving the robot
-            moveRobot(power,0,0);
+            moveRobot(power, 0, 0);
 
             // Keep looping (wait) until the motors are finished or timeout is reached.
             while (myOpMode.opModeIsActive() && (runtime.seconds() < timeoutSec) &&
@@ -375,15 +365,15 @@ public class HardwareJoeBot2018
                 //Compose Telemetry message
                 myOpMode.telemetry.addLine("> Waiting for robot to reach target");
                 myOpMode.telemetry.addLine("Curr. Pos. |")
-                        .addData("1:",motor0.getCurrentPosition())
-                        .addData("2:",motor1.getCurrentPosition())
-                        .addData("3:",motor2.getCurrentPosition())
-                        .addData("4:",motor3.getCurrentPosition());
+                        .addData("1:", motor0.getCurrentPosition())
+                        .addData("2:", motor1.getCurrentPosition())
+                        .addData("3:", motor2.getCurrentPosition())
+                        .addData("4:", motor3.getCurrentPosition());
                 myOpMode.telemetry.addLine("Target | ")
-                        .addData("1:",newmotor0Target)
-                        .addData("2:",newmotor1Target)
-                        .addData("3:",newmotor2Target)
-                        .addData("4:",newmotor3Target);
+                        .addData("1:", newmotor0Target)
+                        .addData("2:", newmotor1Target)
+                        .addData("3:", newmotor2Target)
+                        .addData("4:", newmotor3Target);
                 myOpMode.telemetry.addData("Power: ", power);
                 myOpMode.telemetry.update();
 
@@ -405,15 +395,13 @@ public class HardwareJoeBot2018
 
 
     /**
-     *
      * resetImuAngle()
-     *
+     * <p>
      * Method to grab the current reading from the IMU and set the cumulative angle tracking
      * to 0
-     *
      */
 
-    private void resetAngle(){
+    private void resetAngle() {
 
         // Grab reading from IMU and store it in lastImuAngles
         lastImuAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -424,19 +412,17 @@ public class HardwareJoeBot2018
     }
 
     /**
-     *
      * getAngle()
-     *
+     * <p>
      * Gets the current cumulative angle rotation from last reset.
      *
      * @return Angle in degrees (+ left, - right)
-     *
      */
 
-    private double getAngle(){
+    private double getAngle() {
 
         // Grab the current IMU Angle reading
-        Orientation currAngles = imu.getAngularOrientation(AxesReference.INTRINSIC,AxesOrder.ZYX,AngleUnit.DEGREES);
+        Orientation currAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         // Determine the difference between the current Angle reading and the last reset
         double deltaAngle = currAngles.firstAngle - lastImuAngles.firstAngle;
@@ -454,18 +440,15 @@ public class HardwareJoeBot2018
     }
 
     /**
-     *
      * rotate(int degrees, double power)
-     *
+     * <p>
      * Does not support turning more than 180 degrees.
      *
      * @param degrees
      * @param power
-     *
-     *
      */
 
-    public void rotate(int degrees, double power){
+    public void rotate(int degrees, double power) {
 
         myOpMode.telemetry.log().add("Starting rotate method");
 
@@ -474,10 +457,10 @@ public class HardwareJoeBot2018
 
         // getAngle returns + when rotating counter clockwise and - when rotating clockwise
         // set power (speed) negative when turning right
-        if (degrees > 0 ) power = -power;
+        if (degrees > 0) power = -power;
 
         // start robot turning
-        moveRobot(0,0,power);
+        moveRobot(0, 0, power);
 
         // stop turning when getAngle() returns a value greater or less than intended degrees
         if (degrees < 0) {
@@ -510,23 +493,47 @@ public class HardwareJoeBot2018
                 myOpMode.telemetry.update();
             }
 
+
+        }
+    }
+
+        public void strafeInches ( double inches, double timeoutSec, boolean right){
+            //Math for the time needed to strafe to inches
+            double LtargetTime = inches / 3.25;
+
+            double RtargetTime = inches / 3.25;
+
+            if (right) {
+                //Pos
+                while (runtime.seconds() < RtargetTime) {
+                    moveRobot(0, 0.25, 0);
+                }
+
+                //Stop robot
+                moveRobot(0, 0, 0);
+
+                while (runtime.seconds() >= timeoutSec) {
+                    moveRobot(0, 0, 0);
+                }
+            }
+
+            if (right = false) {
+                //NEG
+                while (runtime.seconds() < LtargetTime) {
+                    moveRobot(0, -0.25, 0);
+                }
+
+                //Stop robot
+                moveRobot(0, 0, 0);
+
+                while (runtime.seconds() >= timeoutSec) {
+                    moveRobot(0, 0, 0);
+                }
+            }
         }
 
 
-        //Stop the motors
-        stop();
-
-        // reset IMU tracking
-        resetAngle();
 
 
-
-    }
 
 }
-
-
-
-
-
-
