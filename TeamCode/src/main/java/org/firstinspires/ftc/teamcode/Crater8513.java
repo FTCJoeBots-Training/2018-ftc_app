@@ -64,14 +64,14 @@ public class Crater8513 extends LinearOpMode {
 
         robot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        // Wait for the game to start (driver presses PLAY) q
+        // Wait for the game to start (driver presses PLAY) 
 
         waitForStart();
 
 
 
-        robot.moveInches(17, 0.5, 15);
-        robot.rotate(89,0.15);
+        robot.moveInches(17.5, 0.5, 15);
+        robot.rotate(88,0.15);
 
         robot.moveInches(16, 0.5, 15);
 
@@ -85,6 +85,9 @@ public class Crater8513 extends LinearOpMode {
         robot.moveInches(-7,0.5,10);
         robot.rotate(-90, 0.15);
         robot.moveInches(50, 0.5, 15);
+        robot.moveInches(-80,0.5,15);
+        robot.rotate(25,0.15);
+        robot.moveInches(-6,1,10);
         /*robot.rotate(90,0.15);
 
         robot.moveInches(12, 0.3, 15);
