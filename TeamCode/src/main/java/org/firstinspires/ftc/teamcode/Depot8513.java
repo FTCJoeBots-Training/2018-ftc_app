@@ -42,7 +42,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous(name="Crater8513", group="Testing")
 //@Disabled
-public class Crater8513 extends LinearOpMode {
+public class Depot8513 extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareJoeBot2018      robot   = new HardwareJoeBot2018();
