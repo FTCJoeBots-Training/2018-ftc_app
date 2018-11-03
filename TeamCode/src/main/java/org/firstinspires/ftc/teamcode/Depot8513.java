@@ -40,7 +40,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  *
  */
 
-@Autonomous(name="Crater8513", group="Testing")
+@Autonomous(name="Depot8513", group="Testing")
 //@Disabled
 public class Depot8513 extends LinearOpMode {
 

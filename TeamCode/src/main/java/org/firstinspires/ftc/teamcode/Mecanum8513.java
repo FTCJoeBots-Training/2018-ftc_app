@@ -25,9 +25,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * List of issues at Comp(1)-> https://docs.google.com/a/stjoebears.com/spreadsheets/d/1r_liipKBU7GHfONdxq9E6d4f7zikcCuXwDL2bsQfwm0/edit?usp=sharing
  *G-Sheet of time VS Heading for autonomous -> https://docs.google.com/a/stjoebears.com/spreadsheets/d/1pqv0iN94fFd5KvX1YIWP7z39HgpURXsscn0zPujs1q4/edit?usp=sharing
 */
-@TeleOp(name="Yimo Mecanum", group="8513")
+@TeleOp(name="Mecanum8513", group="8513")
 
-public class yimoMecanum extends LinearOpMode {
+public class Mecanum8513 extends LinearOpMode {
 
     HardwareJoeBot2018 robot = new HardwareJoeBot2018();
 
