@@ -1,9 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.graphics.Color;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -43,6 +47,9 @@ public class AshtonHardwareJoeBot2018
 
     // Declare Sensors
     public BNO055IMU imu;                  // The IMU sensor object
+    public ColorSensor sensorColor;
+    public DistanceSensor sensorDistance;
+
 
     // Variables used for IMU tracking...
     public Orientation angles;
@@ -122,6 +129,11 @@ public class AshtonHardwareJoeBot2018
         imu = hwMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
 
+        // get a reference to the color sensor.
+        sensorColor = hwMap.get(ColorSensor.class, "sensor_color_distance");
+
+        // get a reference to the distance sensor that shares the same name.
+        sensorDistance = hwMap.get(DistanceSensor.class, "sensor_color_distance");
 
 
     }
@@ -430,6 +442,28 @@ public class AshtonHardwareJoeBot2018
         resetAngle();
 
 
+
+    }
+
+    public boolean isItGold(){
+        //Check for gold mineral (yellow)
+
+        float hsvValues[] = {0F, 0F, 0F};
+
+        final float values[] = hsvValues;
+
+        final double SCALE_FACTOR = 255;
+
+        Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
+                (int) (sensorColor.green() * SCALE_FACTOR),
+                (int) (sensorColor.blue() * SCALE_FACTOR),
+                hsvValues);
+        if (hsvValues[0] >= 20 && hsvValues [0] <= 40) {
+            return true;
+        }
+        else {
+            return false;
+        }
 
     }
 

@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -34,6 +36,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 public class HardwareJoeBot2018
 {
     /* Public OpMode members. */
+
+    //Declare Color Sensor
+
+    public ColorSensor sensorColor;
+    public DistanceSensor sensorDistance;
 
     // Declare Motors
     public DcMotor  motor1 = null; // Left Front
@@ -102,6 +109,12 @@ public class HardwareJoeBot2018
         motor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor4.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        // get a reference to the color sensor.
+        sensorColor = hwMap.get(ColorSensor.class, "sensorColorDistance");
+
+        // get a reference to the distance sensor that shares the same name.
+        sensorDistance = hwMap.get(DistanceSensor.class, "sensorColorDistance");
 
 
         // IMU Initializaiton
