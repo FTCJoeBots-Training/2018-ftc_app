@@ -64,7 +64,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="RD", group="Pushbot")
+@Autonomous(name="RC", group="Pushbot")
 public class AutoCODEoofCrator extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -118,7 +118,8 @@ public class AutoCODEoofCrator extends LinearOpMode {
        robot.rotate(90,.25);
         robot.moveInches(24,.25,15);
         robot.rotate(45,.25);
-        robot.moveInches(48             ,.25,15);
+        robot.moveInches(48,.25,15);
+        robot.moveInches(-85,.35,15);
 
 
 

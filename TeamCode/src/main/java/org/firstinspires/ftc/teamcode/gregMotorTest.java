@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 /**
  * Sample code to test mapping of one motor to the gamepad.
@@ -43,16 +44,17 @@ public class gregMotorTest extends LinearOpMode {
 
 
     // Define class members
-    DcMotor motor1;
+    DcMotor liftMotor;
     double  power   = 0;
 
 
     @Override
     public void runOpMode() {
 
-        // Connect to motor (Assume standard left wheel)
+        // Connect to motor (Assume standard lift motor)
         // Change the text in quotes to match any motor name on your robot.
-        motor1 = hardwareMap.get(DcMotor.class, "motor1");
+        liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
+
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to run Motors." );
@@ -63,11 +65,12 @@ public class gregMotorTest extends LinearOpMode {
 
             // Map "power" variable to gamepad input
             power = gamepad1.left_stick_y;
-            motor1.setPower(power);
+            liftMotor.setPower(power);
 
 
             // Display the current value
             telemetry.addData("Motor Power", "%5.2f", power);
+            telemetry.addData("Motor Position :" , liftMotor.getCurrentPosition());
             telemetry.addData(">", "Press Stop to end test." );
             telemetry.update();
 
@@ -75,7 +78,7 @@ public class gregMotorTest extends LinearOpMode {
         }
 
         // Turn off motor and signal done;
-        motor1.setPower(0);
+        liftMotor.setPower(0);
         telemetry.addData(">", "Done");
         telemetry.update();
 

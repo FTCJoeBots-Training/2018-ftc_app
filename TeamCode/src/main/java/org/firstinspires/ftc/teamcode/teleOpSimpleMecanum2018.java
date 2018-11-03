@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 /**
  *import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -34,13 +35,20 @@ public class teleOpSimpleMecanum2018 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
+
         robot.init(hardwareMap, this);
 
 
         double forward;
         double clockwise;
         double right;
+        // Define class members
+        DcMotor liftMotor;
+        double  power   = 0;
 
+       // Connect to motor (Assume standard lift motor)
+        // Change the text in quotes to match any motor name on your robot.
+        liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
 
         waitForStart();
 
@@ -59,6 +67,9 @@ public class teleOpSimpleMecanum2018 extends LinearOpMode {
 
             robot.moveRobot(forward, right, clockwise);
 
+            // Map "power" variable to gamepad input
+            power = gamepad2.left_stick_y;
+            liftMotor.setPower(power);
 
             // Update Telemetry
             telemetry.addData(">", "Press Stop to end test.");

@@ -125,11 +125,14 @@ public class AutoCODEoof extends LinearOpMode {
         waitForStart();
 
         // Red Depot Code
-       robot.moveInches(12,.25,10);
+       robot.moveInches(15,.25,10);
         robot.rotate(86,.25); // left not Right
         robot.moveInches(40,.25,10);
-        robot.rotate(-121,.25); // Right not left
+        robot.rotate(-119,.25); // Right not left
         robot.moveInches(59,.25,10);
+        robot.rotate(70,.25);
+        robot.moveInches(-85,.35,10);
+
 
 
 
