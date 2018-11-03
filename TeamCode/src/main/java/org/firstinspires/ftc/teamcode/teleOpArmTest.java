@@ -2,6 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
  *import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -25,43 +28,41 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * List of issues at Comp(1)-> https://docs.google.com/a/stjoebears.com/spreadsheets/d/1r_liipKBU7GHfONdxq9E6d4f7zikcCuXwDL2bsQfwm0/edit?usp=sharing
  *G-Sheet of time VS Heading for autonomous -> https://docs.google.com/a/stjoebears.com/spreadsheets/d/1pqv0iN94fFd5KvX1YIWP7z39HgpURXsscn0zPujs1q4/edit?usp=sharing
 */
-@TeleOp(name="Simple Mecanum Drive 2", group="TeleOp")
+@TeleOp(name="Simple Arm Test", group="TeleOp")
 
-public class teleOpSimpleMecanum2018 extends LinearOpMode {
+public class teleOpArmTest extends LinearOpMode {
 
-    HardwareJoeBot2018 robot = new HardwareJoeBot2018();
+    HardwareMap hwMap = null;
+    DcMotor armMotor = null; // Arm Motor
+
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        robot.init(hardwareMap, this);
+        hwMap = hardwareMap;
 
+        armMotor = hwMap.dcMotor.get("armMotor");
 
-        double forward;
-        double clockwise;
-        double right;
+        armMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        armMotor.setPower(0);
 
+        double armPower = 0;
 
         waitForStart();
-
 
 
         //start of loop
         while (opModeIsActive()) {
 
 
-            //Drive Via "Analog Sticks" (Not Toggle)
-            //Set initial motion parameters to Gamepad1 Inputs
-            forward = -gamepad1.left_stick_y;
-            //right = gamepad1.left_stick_x;
-            right = -gamepad1.left_trigger + gamepad1.right_trigger;
-            clockwise = gamepad1.right_stick_x;
+            armPower = gamepad1.right_stick_y;
 
-            robot.moveRobot(forward, right, clockwise);
+            armMotor.setPower(armPower);
 
 
             // Update Telemetry
-            telemetry.addData(">", "Press Stop to end test.");
+            telemetry.addLine("Use Right-Stick-Y to drive Arm");
+            telemetry.addData("Arm Power: ", armPower);
             telemetry.update();
             idle();
 
