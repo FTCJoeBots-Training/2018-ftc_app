@@ -40,9 +40,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  *
  */
 
-@Autonomous(name="Blue Crater Autonomous", group="8513")
+@Autonomous(name="Red Crater Autonomous", group="8513")
 //@Disabled
-public class GraceBlueCraterAutonomous extends LinearOpMode {
+public class GraceRedCraterAutonomous extends LinearOpMode {
 
     /* Declare OpMode members. */
     GraceHardwareJoeBot2018      robot   = new GraceHardwareJoeBot2018();
@@ -76,7 +76,7 @@ public class GraceBlueCraterAutonomous extends LinearOpMode {
         robot.moveInches(35, 0.65, 15);
         //robot.rotate(-180,0.25);
 
-        robot.moveInches(-60, 0.85, 15);
+        robot.moveInches(-57, 0.85, 15);
         //robot.rotate(90,0.15);
 
 

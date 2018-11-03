@@ -67,17 +67,22 @@ public class GraceBlueDepotAutonomous extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        robot.moveInches(15 , 0.75, 15);
-        robot.rotate(87,0.15);
+        robot.moveInches(15, 0.75, 15);
+        robot.rotate(-87,0.15);
 
-        robot.moveInches(43, 0.75, 15);
-        robot.rotate(-128,0.15);
+        robot.moveInches(49, 0.75, 15);
+        robot.rotate(128,0.15);
 
         robot.moveInches(50, 0.75, 15);
         //robot.rotate(90,0.15);
 
-        //robot.moveInches(12, 0.3, 15);
+        robot.moveInches(-57, 0.75, 15);
         //robot.rotate(90,0.15);
+
+        //robot.moveInches(-10, .3, 15);
+        //robot.rotate(90,0.15);
+
+        //robot.moveInches(30, .75, 15);
 
 
     }

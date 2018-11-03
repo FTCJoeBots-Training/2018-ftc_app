@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -31,26 +33,32 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  *
  */
 
-public class GraceHardwareJoeBot2018
-{
+public class GraceHardwareJoeBot2018 {
     /* Public OpMode members. */
 
+    //Declar Color Distance Sensor
+
+    public ColorSensor sensorColor;
+    public DistanceSensor sensorDistance;
+
     // Declare Motors
-    public DcMotor  motor1 = null; // Left Front
-    public DcMotor  motor2 = null; // Right Front
-    public DcMotor  motor3 = null; // Left Rear
-    public DcMotor  motor4 = null; // Right Rear
+    public DcMotor motor1 = null; // Left Front
+    public DcMotor motor2 = null; // Right Front
+    public DcMotor motor3 = null; // Left Rear
+    public DcMotor motor4 = null; // Right Rear
 
     // Declare Sensors
     public BNO055IMU imu;                  // The IMU sensor object
+
+
 
     // Variables used for IMU tracking...
     public Orientation angles;
     public Acceleration gravity;
 
     /* local OpMode members. */
-    HardwareMap hwMap           =  null;
-    private ElapsedTime period  = new ElapsedTime();
+    HardwareMap hwMap = null;
+    private ElapsedTime period = new ElapsedTime();
 
     // Private Members
     private LinearOpMode myOpMode;
@@ -59,15 +67,15 @@ public class GraceHardwareJoeBot2018
     private double globalAngle;
 
     // Declare Static members for calculations
-    static final double COUNTS_PER_MOTOR_REV    = 1120;
-    static final double DRIVE_GEAR_REDUCTION    = 1;
-    static final double WHEEL_DIAMETER_INCHES   = 4.0;
-    static final double COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+    static final double COUNTS_PER_MOTOR_REV = 1120;
+    static final double DRIVE_GEAR_REDUCTION = 1;
+    static final double WHEEL_DIAMETER_INCHES = 4.0;
+    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.14159);
 
 
     /* Constructor */
-    public GraceHardwareJoeBot2018(){
+    public GraceHardwareJoeBot2018() {
 
     }
 
@@ -79,10 +87,10 @@ public class GraceHardwareJoeBot2018
         myOpMode = opMode;
 
         // Define and Initialize Motors
-        motor1 = hwMap.dcMotor.get("motor0");
-        motor2 = hwMap.dcMotor.get("motor1");
-        motor3 = hwMap.dcMotor.get("motor2");
-        motor4 = hwMap.dcMotor.get("motor3");
+        motor1 = hwMap.dcMotor.get("motor0"); //Front right
+        motor2 = hwMap.dcMotor.get("motor1"); //Front left
+        motor3 = hwMap.dcMotor.get("motor2"); //Back right
+        motor4 = hwMap.dcMotor.get("motor3"); //Back left
 
         // Set Default Motor Directions
         motor1.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
@@ -109,11 +117,11 @@ public class GraceHardwareJoeBot2018
         // algorithm here just reports accelerations to the logcat log; it doesn't actually
         // provide positional information.
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        parameters.loggingEnabled      = true;
-        parameters.loggingTag          = "IMU";
+        parameters.loggingEnabled = true;
+        parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
         // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
@@ -121,6 +129,12 @@ public class GraceHardwareJoeBot2018
         // and named "imu".
         imu = hwMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
+
+        // get a reference to the color sensor.
+        sensorColor = hwMap.get(ColorSensor.class, "sensor_color_distance");
+
+        // get a reference to the distance sensor that shares the same name.
+        sensorDistance = hwMap.get(DistanceSensor.class, "sensor_color_distance");
 
 
 
@@ -137,7 +151,7 @@ public class GraceHardwareJoeBot2018
      */
     public void waitForTick(long periodMs) throws InterruptedException {
 
-        long  remaining = periodMs - (long)period.milliseconds();
+        long remaining = periodMs - (long) period.milliseconds();
 
         // sleep for the remaining portion of the regular cycle period.
         if (remaining > 0)
@@ -152,7 +166,7 @@ public class GraceHardwareJoeBot2018
      * void setMode(DcMotor.RunMode mode ) Set all drive motors to same mode.
      * @param mode    Desired Motor mode.
      */
-    public void setMode(DcMotor.RunMode mode ) {
+    public void setMode(DcMotor.RunMode mode) {
         motor1.setMode(mode);
         motor2.setMode(mode);
         motor3.setMode(mode);
@@ -160,15 +174,13 @@ public class GraceHardwareJoeBot2018
     }
 
     /**
-     *
      * void moveRobot(double forward, double right, double clockwise)
-     *
+     * <p>
      * Calculates power settings for Mecanum drive for JoeBots
      *
      * @param forward
      * @param right
      * @param clockwise
-     *
      */
     public void moveRobot(double forward, double right, double clockwise) {
 
@@ -211,11 +223,9 @@ public class GraceHardwareJoeBot2018
     }
 
     /**
-     *
      * stop()
-     *
+     * <p>
      * method to set all motor powers to zero
-     *
      */
 
     public void stop() {
@@ -228,15 +238,13 @@ public class GraceHardwareJoeBot2018
     }
 
     /**
-     *
      * moveInches(double inches, double power)
-     *
+     * <p>
      * method to drive forward (only) for a set # of inches at a set power
      *
      * @param inches
      * @param power
      * @param timeoutSec
-     *
      */
 
     public void moveInches(double inches, double power, int timeoutSec) {
@@ -254,7 +262,7 @@ public class GraceHardwareJoeBot2018
         int newMotor4Target;
 
         // Check to make sure the OpMode is still active; If it isn't don't run the method
-        if(myOpMode.opModeIsActive()) {
+        if (myOpMode.opModeIsActive()) {
 
             // Determine new target positions for each wheel
             newMotor1Target = motor1.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
@@ -275,7 +283,7 @@ public class GraceHardwareJoeBot2018
             runtime.reset();
 
             // Start moving the robot
-            moveRobot(power,0,0);
+            moveRobot(power, 0, 0);
 
             // Keep looping (wait) until the motors are finished or timeout is reached.
             while (myOpMode.opModeIsActive() && (runtime.seconds() < timeoutSec) &&
@@ -285,15 +293,15 @@ public class GraceHardwareJoeBot2018
                 //Compose Telemetry message
                 myOpMode.telemetry.addLine("> Waiting for robot to reach target");
                 myOpMode.telemetry.addLine("Curr. Pos. |")
-                        .addData("1:",motor1.getCurrentPosition())
-                        .addData("2:",motor2.getCurrentPosition())
-                        .addData("3:",motor3.getCurrentPosition())
-                        .addData("4:",motor4.getCurrentPosition());
+                        .addData("1:", motor1.getCurrentPosition())
+                        .addData("2:", motor2.getCurrentPosition())
+                        .addData("3:", motor3.getCurrentPosition())
+                        .addData("4:", motor4.getCurrentPosition());
                 myOpMode.telemetry.addLine("Target | ")
-                        .addData("1:",newMotor1Target)
-                        .addData("2:",newMotor2Target)
-                        .addData("3:",newMotor3Target)
-                        .addData("4:",newMotor4Target);
+                        .addData("1:", newMotor1Target)
+                        .addData("2:", newMotor2Target)
+                        .addData("3:", newMotor3Target)
+                        .addData("4:", newMotor4Target);
                 myOpMode.telemetry.addData("Power: ", power);
                 myOpMode.telemetry.update();
 
@@ -314,15 +322,13 @@ public class GraceHardwareJoeBot2018
     }
 
     /**
-     *
      * resetImuAngle()
-     *
+     * <p>
      * Method to grab the current reading from the IMU and set the cumulative angle tracking
      * to 0
-     *
      */
 
-    private void resetAngle(){
+    private void resetAngle() {
 
         // Grab reading from IMU and store it in lastImuAngles
         lastImuAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -333,19 +339,17 @@ public class GraceHardwareJoeBot2018
     }
 
     /**
-     *
      * getAngle()
-     *
+     * <p>
      * Gets the current cumulative angle rotation from last reset.
      *
      * @return Angle in degrees (+ left, - right)
-     *
      */
 
-    private double getAngle(){
+    private double getAngle() {
 
         // Grab the current IMU Angle reading
-        Orientation currAngles = imu.getAngularOrientation(AxesReference.INTRINSIC,AxesOrder.ZYX,AngleUnit.DEGREES);
+        Orientation currAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         // Determine the difference between the current Angle reading and the last reset
         double deltaAngle = currAngles.firstAngle - lastImuAngles.firstAngle;
@@ -364,18 +368,15 @@ public class GraceHardwareJoeBot2018
     }
 
     /**
-     *
      * rotate(int degrees, double power)
-     *
+     * <p>
      * Does not support turning more than 180 degrees.
      *
      * @param degrees
      * @param power
-     *
-     *
      */
 
-    public void rotate(int degrees, double power){
+    public void rotate(int degrees, double power) {
 
         myOpMode.telemetry.log().add("Starting rotate method");
 
@@ -388,7 +389,7 @@ public class GraceHardwareJoeBot2018
         if (degrees < 0) power = -power;
 
         // start robot turning
-        moveRobot(0,0,power);
+        moveRobot(0, 0, power);
 
         // stop turning when getAngle() returns a value greater or less than intended degrees
         if (degrees < 0) {
@@ -431,10 +432,111 @@ public class GraceHardwareJoeBot2018
         resetAngle();
 
 
-
     }
 
+
+    public void StrafeRobot(double Strafeinches, char StrafeDir, int timeoutSec) {
+        double strafetime = Strafeinches / 3.5 ;
+        if(StrafeDir =='L') {
+            while (runtime.seconds() < strafetime) {
+                moveRobot(0, -.25, 0);
+            }
+        } else{
+            while (runtime.seconds() < strafetime) {
+                moveRobot(0, .25, 0);
+            }
+        }
+    }
 }
+
+    /*public void StrafeRobot(double inches, char StrafeDir, int timeoutSec) {
+
+        // method will accept a value in inches and a direction and calculate the number of
+        // rotations required to drive the given distance to left or right
+
+        // Tell Telemetry what we're starting
+        //myOpMode.telemetry.log().add("Starting strafeRobot method");
+
+        // Declare needed variables
+        //int newMotor1Target;
+       // int newMotor2Target;
+        //int newMotor3Target;
+        //int newMotor4Target;
+
+        // Check to make sure the OpMode is still active; If it isn't don't run the method
+        //if(myOpMode.opModeIsActive()) {
+
+            // Determine new target positions for each wheel
+            //newMotor1Target = motor1.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
+            //newMotor2Target = motor2.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
+            //newMotor3Target = motor3.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
+            //newMotor4Target = motor4.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
+
+            // Send target Positions to motors
+            //motor1.setTargetPosition(newMotor1Target);
+            //motor2.setTargetPosition(newMotor2Target);
+            //motor3.setTargetPosition(newMotor3Target);
+            //motor4.setTargetPosition(newMotor4Target);
+
+            // Set Robot to RUN_TO_POSITION mode
+            //setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Reset the runtime
+            //runtime.reset();
+
+            // Set the wheels to turn correct directions based on which way to strafe
+            /*if (StrafeDir == 'R')
+            {
+                motor1.setPower(-1);
+                motor2.setPower(1);
+                motor3.setPower(1);
+                motor4.setPower(-1);
+            }
+            else {
+                motor1.setPower(1);
+                motor2.setPower(-1);
+                motor3.setPower(-1);
+                motor4.setPower(1);
+            }
+            //moveRobot(power,0,0);
+
+            // Keep looping (wait) until the motors are finished or timeout is reached.
+            while (myOpMode.opModeIsActive() && (runtime.seconds() < timeoutSec) &&
+                    (motor1.isBusy() && motor2.isBusy() && motor3.isBusy() && motor4.isBusy())) {
+
+
+                //Compose Telemetry message
+                myOpMode.telemetry.addLine("> Waiting for robot to reach target");
+                myOpMode.telemetry.addLine("Curr. Pos. |")
+                        .addData("1:",motor1.getCurrentPosition())
+                        .addData("2:",motor2.getCurrentPosition())
+                        .addData("3:",motor3.getCurrentPosition())
+                        .addData("4:",motor4.getCurrentPosition());
+                myOpMode.telemetry.addLine("Target | ")
+                        .addData("1:",newMotor1Target)
+                        .addData("2:",newMotor2Target)
+                        .addData("3:",newMotor3Target)
+                        .addData("4:",newMotor4Target);
+                myOpMode.telemetry.addData("Power: ", 1);
+                myOpMode.telemetry.update();
+
+                myOpMode.idle();
+            }
+
+            // Stop the motors
+            stop();
+
+            // Update telemetry log
+            myOpMode.telemetry.log().add("Ending StrafeRobot method");
+
+            // Set the motors back to standard mode
+            setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        }*/
+        //double RotationNumber = inches/4;
+    //}
+
+//}*/
 
 
 

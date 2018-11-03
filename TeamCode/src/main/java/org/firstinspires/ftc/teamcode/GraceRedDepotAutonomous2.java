@@ -40,12 +40,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  *
  */
 
-@Autonomous(name="Blue Depot Sampling", group="8513")
+@Autonomous(name="Red Depot Autonomous 2", group="8513")
 //@Disabled
-public class GraceAutonomousBlueDepotSampling extends LinearOpMode {
+public class GraceRedDepotAutonomous2 extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareJoeBot2018      robot   = new HardwareJoeBot2018();
+    GraceHardwareJoeBot2018      robot   = new GraceHardwareJoeBot2018();
 
     @Override
     public void runOpMode() {
@@ -67,17 +67,18 @@ public class GraceAutonomousBlueDepotSampling extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        robot.moveInches(12, 0.3, 15);
-        robot.rotate(90,0.15);
+        robot.moveInches(15 , 0.75, 15);
+        robot.rotate(87,0.15);
 
-        robot.moveInches(12, 0.3, 15);
-        robot.rotate(90,0.15);
+        robot.moveInches(43, 0.75, 15);
+        robot.rotate(-128,0.15);
 
-        robot.moveInches(12, 0.3, 15);
-        robot.rotate(90,0.15);
+        robot.moveInches(50, 0.75, 15);
+        //robot.rotate(90,0.15);
 
-        robot.moveInches(12, 0.3, 15);
-        robot.rotate(90,0.15);
+        robot.moveInches(-57, 0.75, 15);
+        //robot.rotate(90,0.15);
+
 
 
     }
