@@ -156,6 +156,7 @@ public class TestHardwareJoeBots
 
     }
 
+
     /***
      *
      * waitForTick implements a periodic delay. However, this acts like a metronome with a regular
@@ -432,11 +433,11 @@ public class TestHardwareJoeBots
     }
 
 
-
-    public void getAngleLocation(){
-
-  //      if getAngle()
+    public void checkAngle(){
+        
     }
+
+
 
     /**
      *
