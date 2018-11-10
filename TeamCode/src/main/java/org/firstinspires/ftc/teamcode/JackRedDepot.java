@@ -40,9 +40,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  *
  */
 
-@Autonomous(name="Sanjan Auto Red Depot" , group="Testing")
+@Autonomous(name="Jack Auto Red Depot" , group="Testing")
 //@Disabled
-public class sanjanRedDepot extends LinearOpMode {
+public class JackRedDepot extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareJoeBot2018      robot   = new HardwareJoeBot2018();
@@ -67,10 +67,19 @@ public class sanjanRedDepot extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        robot.rotate( -45, 0.5);
+        //Detach from the lander
+
+
+
+        //Moves to the Depot
         robot.moveInches(38, 0.5, 10);
         robot.rotate( 90, 0.5);
         robot.moveInches(38, 0.5, 10);
+
+
+
+
+
     }
 
 }

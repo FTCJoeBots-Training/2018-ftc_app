@@ -4,6 +4,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -40,6 +41,12 @@ public class HardwareJoeBot2018
     public DcMotor  motor2 = null; // Right Front
     public DcMotor  motor3 = null; // Left Rear
     public DcMotor  motor4 = null; // Right Rear
+    //Lift motor
+    public DcMotor  liftMotor=null;
+
+
+    public void getLiftMotor() {
+    }
 
     // Declare Sensors
     public BNO055IMU imu;                  // The IMU sensor object
@@ -79,10 +86,13 @@ public class HardwareJoeBot2018
         myOpMode = opMode;
 
         // Define and Initialize Motors
-        motor1 = hwMap.dcMotor.get("motor1");
-        motor2 = hwMap.dcMotor.get("motor2");
-        motor3 = hwMap.dcMotor.get("motor3");
-        motor4 = hwMap.dcMotor.get("motor4");
+        motor1 = hwMap.dcMotor.get("motor0");
+        motor2 = hwMap.dcMotor.get("motor1");
+        motor3 = hwMap.dcMotor.get("motor2");
+        motor4 = hwMap.dcMotor.get("motor3");
+        //lift motor
+        liftMotor= hwMap.dcMotor.get("liftmotor");
+
 
         // Set Default Motor Directions
         motor1.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
@@ -90,11 +100,18 @@ public class HardwareJoeBot2018
         motor3.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         motor4.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
 
+        //Set lift motor direction
+        liftMotor.setDirection(DcMotor.Direction.FORWARD);
+
+
         // Set all motors to zero power
         motor1.setPower(0);
         motor2.setPower(0);
         motor3.setPower(0);
         motor4.setPower(0);
+
+        //Set lift motor to zero
+        liftMotor.setPower(0);
 
         // Set all drive motors to run without encoders.
         // May want to switch to  RUN_USING_ENCODERS during autonomous
@@ -103,6 +120,8 @@ public class HardwareJoeBot2018
         motor3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor4.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        //Set lift motor to run with encoders
+        liftMotor.setMode((DcMotor.RunMode.RUN_WITHOUT_ENCODER));
 
         // IMU Initializaiton
         // Set up the parameters with which we will use our IMU. Note that integration
@@ -226,6 +245,67 @@ public class HardwareJoeBot2018
         motor4.setPower(0);
 
     }
+
+
+ public void motorUp(double power, double timeoutSec)
+ {
+     //target variables
+     int newliftMotorTarget;
+
+     //set the motor direction
+     liftMotor.setDirection(DcMotor.Direction.FORWARD);
+
+     //determine target postition
+     newliftMotorTarget = liftMotor.getCurrentPosition() + (int) (8 * COUNTS_PER_INCH);
+
+     //run to that postition
+     liftMotor.setTargetPosition(newliftMotorTarget);
+     setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+     // Keep looping (wait) until the motors are finished or timeout is reached.
+     while (myOpMode.opModeIsActive() && (runtime.seconds() < timeoutSec) &&
+             liftMotor.isBusy()) {
+         liftMotor.setPower(power);
+     }
+
+
+     //stop
+    liftMotor.setPower(0);
+
+ }
+
+
+    public void motorDown(double power, double timeoutSec)
+    {
+        //target variables
+        int newliftMotorTarget;
+
+        //set the motor direction
+        liftMotor.setDirection(DcMotor.Direction.REVERSE);
+
+        //determine target postition
+        newliftMotorTarget = liftMotor.getCurrentPosition() + (int) (8 * COUNTS_PER_INCH);
+
+        //run to that postition
+        liftMotor.setTargetPosition(newliftMotorTarget);
+        setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        // Keep looping (wait) until the motors are finished or timeout is reached.
+        while (myOpMode.opModeIsActive() && (runtime.seconds() < timeoutSec) &&
+                liftMotor.isBusy()) {
+            liftMotor.setPower(power);
+        }
+
+
+        //stop
+        liftMotor.setPower(0);
+
+    }
+
+
+
 
     /**
      *
