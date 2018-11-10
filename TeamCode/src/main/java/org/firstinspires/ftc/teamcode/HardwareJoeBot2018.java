@@ -1,9 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.graphics.Color;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -36,13 +40,15 @@ public class HardwareJoeBot2018
     /* Public OpMode members. */
 
     // Declare Motors
-    public DcMotor  motor1 = null; // Left Front
-    public DcMotor  motor2 = null; // Right Front
-    public DcMotor  motor3 = null; // Left Rear
-    public DcMotor  motor4 = null; // Right Rear
+    public DcMotor  motor0 = null; // Left Front
+    public DcMotor  motor1 = null; // Right Front
+    public DcMotor  motor2 = null; // Left Rear
+    public DcMotor  motor3 = null; // Right Rear
 
     // Declare Sensors
     public BNO055IMU imu;                  // The IMU sensor object
+    public ColorSensor sensorColor;
+    public DistanceSensor sensorDistance;
 
     // Variables used for IMU tracking...
     public Orientation angles;
@@ -79,29 +85,29 @@ public class HardwareJoeBot2018
         myOpMode = opMode;
 
         // Define and Initialize Motors
+        motor0 = hwMap.dcMotor.get("motor0");
         motor1 = hwMap.dcMotor.get("motor1");
         motor2 = hwMap.dcMotor.get("motor2");
         motor3 = hwMap.dcMotor.get("motor3");
-        motor4 = hwMap.dcMotor.get("motor4");
 
         // Set Default Motor Directions
-        motor1.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-        motor2.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
-        motor3.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-        motor4.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
+        motor0.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        motor1.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
+        motor2.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        motor3.setDirection(DcMotor.Direction.FORWARD); // Set to FORWARD if using AndyMark motors
 
         // Set all motors to zero power
+        motor0.setPower(0);
         motor1.setPower(0);
         motor2.setPower(0);
         motor3.setPower(0);
-        motor4.setPower(0);
 
         // Set all drive motors to run without encoders.
         // May want to switch to  RUN_USING_ENCODERS during autonomous
+        motor0.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motor4.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         // IMU Initializaiton
@@ -121,6 +127,12 @@ public class HardwareJoeBot2018
         // and named "imu".
         imu = hwMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
+
+        // get a reference to the color sensor.
+        sensorColor = hwMap.get(ColorSensor.class, "sensor_color_distance");
+
+        // get a reference to the distance sensor that shares the same name.
+        sensorDistance = hwMap.get(DistanceSensor.class, "sensor_color_distance");
 
 
 
@@ -153,10 +165,10 @@ public class HardwareJoeBot2018
      * @param mode    Desired Motor mode.
      */
     public void setMode(DcMotor.RunMode mode ) {
+        motor0.setMode(mode);
         motor1.setMode(mode);
         motor2.setMode(mode);
         motor3.setMode(mode);
-        motor4.setMode(mode);
     }
 
     /**
@@ -173,40 +185,40 @@ public class HardwareJoeBot2018
     public void moveRobot(double forward, double right, double clockwise) {
 
         // Declare Variables to hold calculated power values for each motor
+        double power0;
         double power1;
         double power2;
         double power3;
-        double power4;
         double max;
 
-        power1 = forward + clockwise + right;
-        power2 = forward - clockwise - right;
-        power3 = forward + clockwise - right;
-        power4 = forward - clockwise + right;
+        power0 = forward + clockwise + right;
+        power1 = forward - clockwise - right;
+        power2 = forward + clockwise - right;
+        power3 = forward - clockwise + right;
 
         // Normalize Wheel speeds so that no speed exceeds 1.0
-        max = Math.abs(power1);
+        max = Math.abs(power0);
+        if (Math.abs(power1) > max) {
+            max = Math.abs(power1);
+        }
         if (Math.abs(power2) > max) {
             max = Math.abs(power2);
         }
         if (Math.abs(power3) > max) {
             max = Math.abs(power3);
         }
-        if (Math.abs(power4) > max) {
-            max = Math.abs(power4);
-        }
 
         if (max > 1) {
+            power0 /= max;
             power1 /= max;
             power2 /= max;
             power3 /= max;
-            power4 /= max;
         }
 
+        motor0.setPower(power0);
         motor1.setPower(power1);
         motor2.setPower(power2);
         motor3.setPower(power3);
-        motor4.setPower(power4);
 
     }
 
@@ -220,10 +232,10 @@ public class HardwareJoeBot2018
 
     public void stop() {
 
+        motor0.setPower(0);
         motor1.setPower(0);
         motor2.setPower(0);
         motor3.setPower(0);
-        motor4.setPower(0);
 
     }
 
@@ -248,25 +260,25 @@ public class HardwareJoeBot2018
         myOpMode.telemetry.log().add("Starting moveInches method");
 
         // Declare needed variables
+        int newMotor0Target;
         int newMotor1Target;
         int newMotor2Target;
         int newMotor3Target;
-        int newMotor4Target;
 
         // Check to make sure the OpMode is still active; If it isn't don't run the method
         if(myOpMode.opModeIsActive()) {
 
             // Determine new target positions for each wheel
+            newMotor0Target = motor0.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
             newMotor1Target = motor1.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
             newMotor2Target = motor2.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
             newMotor3Target = motor3.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
-            newMotor4Target = motor4.getCurrentPosition() + (int) (inches * COUNTS_PER_INCH);
 
             // Send target Positions to motors
+            motor0.setTargetPosition(newMotor0Target);
             motor1.setTargetPosition(newMotor1Target);
             motor2.setTargetPosition(newMotor2Target);
             motor3.setTargetPosition(newMotor3Target);
-            motor4.setTargetPosition(newMotor4Target);
 
             // Set Robot to RUN_TO_POSITION mode
             setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -279,21 +291,21 @@ public class HardwareJoeBot2018
 
             // Keep looping (wait) until the motors are finished or timeout is reached.
             while (myOpMode.opModeIsActive() && (runtime.seconds() < timeoutSec) &&
-                    (motor1.isBusy() && motor2.isBusy() && motor3.isBusy() && motor4.isBusy())) {
+                    (motor1.isBusy() && motor2.isBusy() && motor3.isBusy() && motor3.isBusy())) {
 
 
                 //Compose Telemetry message
                 myOpMode.telemetry.addLine("> Waiting for robot to reach target");
                 myOpMode.telemetry.addLine("Curr. Pos. |")
+                        .addData("0:",motor0.getCurrentPosition())
                         .addData("1:",motor1.getCurrentPosition())
                         .addData("2:",motor2.getCurrentPosition())
-                        .addData("3:",motor3.getCurrentPosition())
-                        .addData("4:",motor4.getCurrentPosition());
+                        .addData("3:",motor3.getCurrentPosition());
                 myOpMode.telemetry.addLine("Target | ")
+                        .addData("0:",newMotor0Target)
                         .addData("1:",newMotor1Target)
                         .addData("2:",newMotor2Target)
-                        .addData("3:",newMotor3Target)
-                        .addData("4:",newMotor4Target);
+                        .addData("3:",newMotor3Target);
                 myOpMode.telemetry.addData("Power: ", power);
                 myOpMode.telemetry.update();
 
@@ -430,6 +442,35 @@ public class HardwareJoeBot2018
 
 
 
+
+
+
+    }
+
+    public boolean isItGold(){
+        //Check to see if color sensor is yellow.
+
+        float hsvValues[] = {0F,0F,0F};
+
+        final float values[] =hsvValues;
+
+
+
+
+        final double SCALE_FACTOR =255;
+
+        Color.RGBToHSV((int)(sensorColor.red()* SCALE_FACTOR),
+                (int)(sensorColor.green()* SCALE_FACTOR),
+                (int)(sensorColor.blue()* SCALE_FACTOR),
+                hsvValues);
+
+        myOpMode.telemetry.addData("HSV: ", hsvValues[0]);
+
+        if (hsvValues[0] >= 20 && hsvValues[0] <= 40) {
+            return true;
+        }else {
+            return false;
+        }
     }
 
 }

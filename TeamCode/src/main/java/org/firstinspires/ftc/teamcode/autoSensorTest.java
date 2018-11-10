@@ -40,9 +40,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  *
  */
 
-@Autonomous(name="Sanjan Auto Blue Crater " , group="Testing")
+@Autonomous(name="Mariah sensor test" , group="Testing")
 //@Disabled
-public class sanjanBlueCrater extends LinearOpMode {
+public class autoSensorTest extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareJoeBot2018      robot   = new HardwareJoeBot2018();
@@ -67,29 +67,15 @@ public class sanjanBlueCrater extends LinearOpMode {
         // Wait for the game to start (driver presses PLA78Y)
         waitForStart();
 
-        robot.rotate( -45, 0.5);
-        robot.moveInches(39, 0.5, 6);
-        robot.rotate( -55, 0.5);
-        robot.moveInches(60, 0.5, 1);
-        robot.moveInches(-100,1,6);
-
-        //strathe code
-
-        // assume we're in the right starting position
-        // while colorsensor does not see yellow
-
-
-        robot.moveRobot(0,-100,0);
-
-
-
-
-        robot.moveRobot(0,0,100);
-
-
-
-
-
+        while(opModeIsActive()){
+            telemetry.addLine("Starting ColorSensor");
+            if(robot.isItGold()){
+                telemetry.addLine("I see gold");
+            } else {
+                telemetry.addLine("No gold found");
+            }
+            telemetry.update();
+        }
     }
 
 }

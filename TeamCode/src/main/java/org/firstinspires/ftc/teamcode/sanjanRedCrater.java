@@ -40,7 +40,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  *
  */
 
-@Autonomous(name="Sanjan Auto Red Crater " , group="Testing")
+@Autonomous(name=" Auto Red Crater " , group="Testing")
 //@Disabled
 public class sanjanRedCrater extends LinearOpMode {
 
@@ -67,9 +67,9 @@ public class sanjanRedCrater extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        robot.rotate( -45, 0.5);
-        robot.moveInches(38, 0.5, 10);
-        robot.rotate( 90, 0.5);
+        robot.rotate( -90, 0.5);
+        robot.moveInches(50, 0.5, 10);
+        robot.rotate( -90, 0.5);
         robot.moveInches(38, 0.5, 10);
     }
 
