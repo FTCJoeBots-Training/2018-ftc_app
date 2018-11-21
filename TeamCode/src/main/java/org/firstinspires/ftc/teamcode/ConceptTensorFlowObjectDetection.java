@@ -123,6 +123,7 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
                                 telemetry.addLine("Found Gold");
                                 telemetry.addData("GET LEFT:  ",recognition.getLeft());
                                 telemetry.addData("Get Right",recognition.getRight());
+                                telemetry.addData("GET TOP",recognition.getTop());
                                 telemetry.update();
 
                             }
