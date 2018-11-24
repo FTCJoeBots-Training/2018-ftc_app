@@ -8,11 +8,17 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+
+import java.util.List;
 
 /**
  * This is NOT an opmode. This is a hardware class used to abstract the hardware config for the
@@ -65,6 +71,24 @@ public class HardwareJoeBot2018
     private Orientation lastImuAngles = new Orientation();
     private double globalAngle;
 
+    ////////////////////////////////////////////////// ADDED THIS FOR TENSOR FLOW  ////////////////////////////////
+    //vuforia key
+    private static final String VUFORIA_KEY = "AWlN79T/////AAABmWr9OM0/rkyCv9xvArgzsFQAk+1QECSzNLLooRyXl4SJEguYmtuWqkOyEfk1XbyxiVq95BuSeuD5kgCMFUxvoDZBSrGA05GCbpvavBkmw8wpZDi5ffhERuoFtbbdJR8N6n3ddLfL19Ei+xljlb0it+9ukBP+Q4qCaZwpbTqupaZJGzlCsLPBIjKVUhTa8vEmbs1X8dEzHcIRZ9DIcBEkybCybflhpztnmCnaJ8s5qUd6qJxmgFv7Ei/zCchZm2eLZtjJ7OaQykPBOjb54DLgA34s/Lybr0JrKXL/vPrh0pTIDXd3v1aERMydeZpKNz1oGBBJaVZgU9yID7yRnaO+VHsGNOMgjMHjCbYLMpQKrdGx";
+
+    //vufoia locolizer
+    public  VuforiaLocalizer vuforia;
+
+   //tenser flow detector
+    public TFObjectDetector tfod;
+
+    private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
+    private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
+    private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
     // Declare Static members for calculations
     static final double COUNTS_PER_MOTOR_REV    = 1120;
     static final double DRIVE_GEAR_REDUCTION    = 1;
@@ -91,7 +115,7 @@ public class HardwareJoeBot2018
         motor3 = hwMap.dcMotor.get("motor2");
         motor4 = hwMap.dcMotor.get("motor3");
         //lift motor
-        liftMotor= hwMap.dcMotor.get("liftmotor");
+        liftMotor= hwMap.dcMotor.get("liftMotor");
 
 
         // Set Default Motor Directions
@@ -140,6 +164,16 @@ public class HardwareJoeBot2018
         // and named "imu".
         imu = hwMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
+
+//////////////////////////////////  INITIALIZE VUFORIA AND TENSOR FLOW OBJECT DETECTOR
+        //initialize vuforia here because vuforia takes a while to init
+        initVuforia();
+        if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
+            initTfod();
+        } else {
+            myOpMode.telemetry.addData("Sorry!", "This device is not compatible with TFOD");
+        }
+////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -511,6 +545,107 @@ public class HardwareJoeBot2018
 
 
     }
+
+
+ /////////////////////////////////     Added this method:
+    ///    tflocate  -  look at the leftmost two minerals because we can't see all three
+    ///              -   if this sees, two silver minerals, gold is on the right, return 2 (right)
+    ///              -   if this sees a gold on the right, return 1 (center)
+    ///              -   if this sees a gold on the left, return 0 (left)
+    ////             -   If this is in an undetermined state, it function returns -1
+    ///
+    ///    CAUTION!!!! -   Make sure the phone is oriented properly (camera toward middle) or this
+    //                     will confuse left and center positions
+
+    public int tflocate()
+    {
+
+
+        /** Activate Tensor Flow Object Detection. */
+        if (tfod != null) {
+            tfod.activate();
+        }
+
+
+            if (tfod != null) {
+                // getUpdatedRecognitions() will return null if no new information is available since
+                // the last time that call was made.
+                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                if (updatedRecognitions != null) {
+                    myOpMode.telemetry.addData("# Object Detected", updatedRecognitions.size());
+                    if (updatedRecognitions.size() == 2) {
+                        int goldMineralX = -1;
+                        int silverMineral1X = -1;
+                        int silverMineral2X = -1;
+                        for (Recognition recognition : updatedRecognitions) {
+                            if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                                goldMineralX = (int) recognition.getLeft();
+                                myOpMode.telemetry.addData("Left Edge:",recognition.getLeft());
+                            } else if (silverMineral1X == -1) {
+                                silverMineral1X = (int) recognition.getLeft();
+                            } else {
+                                silverMineral2X = (int) recognition.getLeft();
+                            }
+                        }
+
+                        if (goldMineralX == -1 )
+                        {
+                            myOpMode.telemetry.addLine("Right");
+                            return 2;
+                        }
+                        else if (goldMineralX > silverMineral1X)
+                        {
+                            myOpMode.telemetry.addLine("Center");
+                            myOpMode.telemetry.addData("gold mineral X", goldMineralX);
+                            myOpMode.telemetry.addData("silver mineral x", silverMineral1X);
+                            return 1;
+                        }
+                        else
+                        {
+                            myOpMode.telemetry.addLine("Left");
+                            return 0;
+                        }
+
+                    } else {
+                            myOpMode.telemetry.addData("Objects detected:", updatedRecognitions.size());
+
+                    }
+                    myOpMode.telemetry.update();
+                }
+            }
+
+        return -1;
+            }
+/////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////  Initialize tensor flow object detector/////////////////////
+    public void initTfod() {
+        int tfodMonitorViewId = hwMap.appContext.getResources().getIdentifier(
+                "tfodMonitorViewId", "id", hwMap.appContext.getPackageName());
+        TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
+        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
+        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////Initialize Vuforia//////////////////////////////////////////////
+    public void initVuforia() {
+        /*
+         * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
+         */
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+
+        parameters.vuforiaLicenseKey = VUFORIA_KEY;
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+
+        //  Instantiate the Vuforia engine
+        vuforia = ClassFactory.getInstance().createVuforia(parameters);
+
+        // Loading trackables is not necessary for the Tensor Flow Object Detection engine.
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 }
 

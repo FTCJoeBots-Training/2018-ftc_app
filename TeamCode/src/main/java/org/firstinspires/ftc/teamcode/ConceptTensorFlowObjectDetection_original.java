@@ -29,14 +29,15 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+
 import java.util.List;
 
 /**
@@ -49,9 +50,9 @@ import java.util.List;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@TeleOp(name = "TensorFlow Object Detection - JACK", group = "Concept")
-//@Disabled
-public class ConceptTensorFlowObjectDetection extends LinearOpMode {
+@TeleOp(name = "TF OBJ DETECT", group = "Concept")
+    //@Disabled
+    public class ConceptTensorFlowObjectDetection_original extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
@@ -86,16 +87,9 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
     public void runOpMode() {
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
-        telemetry.addLine("Initializing Vuforia");
-        telemetry.update();
         initVuforia();
 
-        telemetry.addLine("Making TensorFlow detector");
-        telemetry.update();
-
         if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
-            telemetry.addLine("initializing");
-            telemetry.update();
             initTfod();
         } else {
             telemetry.addData("Sorry!", "This device is not compatible with TFOD");
@@ -118,36 +112,51 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
                     // the last time that call was made.
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                     if (updatedRecognitions != null) {
+                      telemetry.addData("# Object Detected", updatedRecognitions.size());
+                      if (updatedRecognitions.size() == 2) {
+                        int goldMineralX = -1;
+                        int silverMineral1X = -1;
+                        int silverMineral2X = -1;
                         for (Recognition recognition : updatedRecognitions) {
-                            if (updatedRecognitions.size()==2) {
-                                if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                                    telemetry.addData("Objects found:", updatedRecognitions.size());
-                                    telemetry.addLine("Found Gold");
-                                    telemetry.addData("GET LEFT:  ", recognition.getLeft());
-                                    telemetry.addData("Get Right", recognition.getRight());
-                                    telemetry.addData("GET TOP", recognition.getTop());
-                                    telemetry.update();
-                                } else {
+                          if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                            goldMineralX = (int) recognition.getLeft();
+                            telemetry.addData("Left Edge:",recognition.getLeft());
+                          } else if (silverMineral1X == -1) {
+                            silverMineral1X = (int) recognition.getLeft();
+                          } else {
+                            silverMineral2X = (int) recognition.getLeft();
+                          }
+                        }
 
-                                    telemetry.addLine("RIGHT!!");
-                                    telemetry.update();
-                                }
-                            } else
-                            {
-                                telemetry.addLine("2 objects not found");
-                                telemetry.update();
-                            }
+                        if (goldMineralX == -1 )
+                        {
+                            telemetry.addLine("Right");
+                        }
+                        else if (goldMineralX > silverMineral1X)
+                        {
+                            telemetry.addLine("Center");
+                        }
+                        else
+                        {
+                            telemetry.addLine("Left");
                         }
 
                       }
-                      }
+                      telemetry.update();
+                    }
                 }
             }
+
+
+
+
+
+        }
 
         if (tfod != null) {
             tfod.shutdown();
         }
-        }
+    }
 
     /**
      * Initialize the Vuforia localization engine.
