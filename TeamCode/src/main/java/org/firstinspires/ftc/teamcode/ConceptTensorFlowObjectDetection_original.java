@@ -120,11 +120,11 @@ import java.util.List;
                         for (Recognition recognition : updatedRecognitions) {
                           if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
                             goldMineralX = (int) recognition.getLeft();
-                            telemetry.addData("Left Edge:",recognition.getLeft());
+                            telemetry.addData("Left Edge:",recognition.getTop());
                           } else if (silverMineral1X == -1) {
-                            silverMineral1X = (int) recognition.getLeft();
+                            silverMineral1X = (int) recognition.getTop();
                           } else {
-                            silverMineral2X = (int) recognition.getLeft();
+                            silverMineral2X = (int) recognition.getTop();
                           }
                         }
 

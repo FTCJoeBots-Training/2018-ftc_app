@@ -40,9 +40,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  *
  */
 
-@Autonomous(name="Sanjan Auto Blue Crater " , group="Testing")
+@Autonomous(name="Sanjan Auto Blue Depot" , group="Testing")
 //@Disabled
-public class sanjanBlueCrater extends LinearOpMode {
+public class BlueDepot extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareJoeBot2018      robot   = new HardwareJoeBot2018();

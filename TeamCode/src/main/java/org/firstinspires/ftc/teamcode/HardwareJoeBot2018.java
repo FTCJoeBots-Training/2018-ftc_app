@@ -565,8 +565,6 @@ public class HardwareJoeBot2018
         if (tfod != null) {
             tfod.activate();
         }
-
-
             if (tfod != null) {
                 // getUpdatedRecognitions() will return null if no new information is available since
                 // the last time that call was made.
@@ -579,13 +577,17 @@ public class HardwareJoeBot2018
                         int silverMineral2X = -1;
                         for (Recognition recognition : updatedRecognitions) {
                             if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                                goldMineralX = (int) recognition.getLeft();
-                                myOpMode.telemetry.addData("Left Edge:",recognition.getLeft());
-                            } else if (silverMineral1X == -1) {
-                                silverMineral1X = (int) recognition.getLeft();
-                            } else {
-                                silverMineral2X = (int) recognition.getLeft();
+                                goldMineralX = (int) recognition.getTop();
+                                myOpMode.telemetry.addData("Left Edge:",recognition.getTop());
                             }
+                            if (recognition.getLabel().equals(LABEL_SILVER_MINERAL)) {
+                                silverMineral1X = (int) recognition.getTop();
+                                myOpMode.telemetry.addData("Left Edge:",recognition.getTop());
+                            }
+
+
+
+
                         }
 
                         if (goldMineralX == -1 )
@@ -600,6 +602,15 @@ public class HardwareJoeBot2018
                             myOpMode.telemetry.addData("silver mineral x", silverMineral1X);
                             return 1;
                         }
+
+                        else if (goldMineralX < silverMineral1X)
+                        {
+                            myOpMode.telemetry.addLine("Left");
+                            myOpMode.telemetry.addData("gold mineral X", goldMineralX);
+                            myOpMode.telemetry.addData("silver mineral x", silverMineral1X);
+                            return 0;
+                        }
+
                         else
                         {
                             myOpMode.telemetry.addLine("Left");

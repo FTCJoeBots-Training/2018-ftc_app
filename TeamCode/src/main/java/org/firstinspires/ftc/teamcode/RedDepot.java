@@ -42,7 +42,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous(name="Jack Auto Red Depot" , group="Testing")
 //@Disabled
-public class JackRedDepot extends LinearOpMode {
+public class RedDepot extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareJoeBot2018      robot   = new HardwareJoeBot2018();

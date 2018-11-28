@@ -97,7 +97,7 @@ public class tf_auto_test extends LinearOpMode {
                 found_gold=true;
                 telemetry.addLine("Found Gold");
                 telemetry.update();
-                sleep(2000);
+                sleep(12000);
             }
             telemetry.addLine("Sleeping");
             telemetry.update();

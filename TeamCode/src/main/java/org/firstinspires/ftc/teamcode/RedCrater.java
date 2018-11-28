@@ -42,7 +42,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous(name="Sanjan Auto Red Crater " , group="Testing")
 //@Disabled
-public class sanjanRedCrater extends LinearOpMode {
+public class RedCrater extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareJoeBot2018      robot   = new HardwareJoeBot2018();
