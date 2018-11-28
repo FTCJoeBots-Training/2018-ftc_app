@@ -31,13 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
-
-import java.util.List;
 
 /**
  *
@@ -46,9 +40,9 @@ import java.util.List;
  *
  */
 
-@Autonomous(name="tf_auto_test_orig" , group="Testing")
+@Autonomous(name="tf_auto_right" , group="Testing")
 //@Disabled
-public class tf_auto_test extends LinearOpMode {
+public class tf_auto_test_Right extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareJoeBot2018 robot = new HardwareJoeBot2018();
@@ -84,7 +78,7 @@ public class tf_auto_test extends LinearOpMode {
         while (!found_gold) {
             telemetry.addLine("calling tflocate()");
             telemetry.update();
-            sleep(400);
+            sleep(1000);
 
             ///Call our tflocate method to find the gold mineral
             position = robot.tflocate();
@@ -97,7 +91,7 @@ public class tf_auto_test extends LinearOpMode {
                 found_gold=true;
                 telemetry.addLine("Found Gold");
                 telemetry.update();
-                sleep(1000);
+                sleep(12000);
             }
             telemetry.addLine("Sleeping");
             telemetry.update();
