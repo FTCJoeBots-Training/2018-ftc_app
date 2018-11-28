@@ -52,6 +52,7 @@ public class tf_auto_test_Right extends LinearOpMode {
 
         /*
          * Initialize the drive system variables.
+         *
          * The init() method of the hardware class does all the work here
          */
 
